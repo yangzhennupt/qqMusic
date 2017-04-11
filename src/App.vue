@@ -21,7 +21,7 @@ export default {
 <style lang="scss">
   @media screen and (min-width: 72rem) {
          body{
-      margin: 0 auto;
+     
       width:40rem;
 
     }
@@ -35,6 +35,9 @@ export default {
   text-align: center;
   
  
+}
+body{
+   margin: 0 auto;
 }
 
 html{
