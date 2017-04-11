@@ -1,7 +1,7 @@
 <template>
     <div class="warp">
         <swiper :options="swiperOption">
-            <swiper-slide v-for="slide in swiperSlides">I'm Slide {{ slide }}</swiper-slide>
+            <swiper-slide v-for="slide in swiperSlides"><img :src="slide.picUrl" class="slide-img"></swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
     </div>
@@ -17,14 +17,11 @@ export default {
         swiper,
         swiperSlide
     },
-    beforeCreate() {
-        this.$store.dispatch('getData');
-    },
     data() {
         return {
             msg: 'Welcome to Your Vue.js App',
             swiperOption: {
-                autoplay: 2000,
+                autoplay: 3000,
                 setWrapperSize: true,
                 pagination: '.swiper-pagination'
             },
@@ -32,13 +29,18 @@ export default {
 
         }
     },
-    mounted() {
-        // console.log(this.newSong);
-        this.swiperSlides = this.$store.state.sliderList;
+    created() {
+        this.$store.dispatch('getData').then(res => {
+            this.swiperSlides = res.data.data.slider;
+        });
+
 
     }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+.slide-img{
+    width:100%;
+}
 </style>

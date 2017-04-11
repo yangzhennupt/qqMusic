@@ -19,33 +19,17 @@ Vue.use(vueResource);
 
 const store = new Vuex.Store({
     state: {
-     sliderList:[],
-     radioList:[]
+        sliderList: [],
+        radioList: []
     },
     mutations: {
-      getAll(state,obj){
-      	state.sliderList=obj.data.data.slider;
-      	state.radioList=obj.data.data.radioList;
-      }
+        getAll(state, obj) {
+            state.sliderList = obj.data.data.slider;
+            state.radioList = obj.data.data.radioList;
+        }
     },
     actions: {
-        getData({commit}) {
-            // Vue.http.jsonp('http://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg', {
-            //       params: {
-            //         g_tk: 5381,
-            //         loginUin: 0,
-            //         hostUin: 0,
-            //         format: 'jsonp',
-            //         inCharset: 'utf8',
-            //         outCharset: 'utf-8',
-            //         notice: 0,
-            //         platform: 'yqq',
-            //         needNewCode: 0
-            //       },
-            //       jsonp: 'jsonpCallback'
-            //     }).then((response) => {
-            //       console.log(response.data.data);       
-            //     })
+        getData({ commit }) {
             return new Promise((resolve, reject) => {
                 Vue.http.jsonp('https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg', {
                     params: {
@@ -60,10 +44,11 @@ const store = new Vuex.Store({
                         _: new Date().getTime()
                     },
                     jsonp: 'jsonpCallback'
-                }).then((res) => {                	
-                     commit('getAll',res);
+                }).then((res) => {
+                    //commit('getAll',res);
+                    resolve(res);
                 })
-                resolve();
+
             })
         }
     }

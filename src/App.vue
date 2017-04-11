@@ -18,7 +18,16 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  @media screen and (min-width: 72rem) {
+         body{
+      margin: 0 auto;
+      width:40rem;
+
+    }
+
+  }
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -27,10 +36,7 @@ export default {
   
  
 }
-body{
-  margin: 0;
 
-}
 html{
   font-size: 10px;
 }
