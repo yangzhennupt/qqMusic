@@ -19,17 +19,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style  lang="scss" scoped  >
-
-
        .qHeader{
-
          background-color:#31c27c;
          display: flex;
          justify-content:space-between;
          height: 44px;
          align-items:center;
             .logo{
-              background: url(/../../static/logo.png) no-repeat;
+              background: url(./logo.png) no-repeat;
               height: 25px;
               width:  90px;
               background-size: cover; 
