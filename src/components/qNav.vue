@@ -24,7 +24,7 @@ export default {
 .qNav {
     background-color: #fff;
     display: flex;
-    a {
+    >a {
         flex: 1;
         color: #333;
         position: relative;
@@ -44,6 +44,12 @@ export default {
                 height: 2px;
                 background-color: #31c27c;
             }
+        }
+        >a{
+            width:100%;
+            display:inline-block;
+            text-decoration:none;
+            color:#333;
         }
     }
 }

@@ -11,7 +11,7 @@
     
     <!-- 底部mini播放器 -->
     <qFooter></qFooter>
-    <audio src="http://m2.music.126.net/K1SFXCvWf8BO9VEpSvx2ew==/7967061257205150.mp3" autoplay=true></audio>
+    <audio src="http://m2.music.126.net/K1SFXCvWf8BO9VEpSvx2ew==/7967061257205150.mp3" autoplay=true class="audio"></audio>
   </div>
 </template>
 
