@@ -20,12 +20,21 @@ Vue.use(vueResource);
 const store = new Vuex.Store({
     state: {
         sliderList: [],
-        radioList: []
+        radioList: [],
+        activeIndex:0,
+        songData:null,
+        isShowminiPlay:true
     },
     mutations: {
         getAll(state, obj) {
             state.sliderList = obj.data.data.slider;
             state.radioList = obj.data.data.radioList;
+        },
+        changeActiveIndex(state,index){
+            state.activeIndex=index;
+        },
+        changShowminiPlay(state,flag){
+           state.isShowminiPlay=flag;
         }
     },
     actions: {
@@ -45,10 +54,30 @@ const store = new Vuex.Store({
                     },
                     jsonp: 'jsonpCallback'
                 }).then((res) => {
-                    //commit('getAll',res);
                     resolve(res);
                 })
 
+            })
+        },
+        getTopList(){
+            return new Promise((resolve,reject)=>{
+                 Vue.http.jsonp('https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg',{
+                   params:{
+                        format:'jsonp',
+                        g_tk:5381,
+                        uin:0,
+                        format:'jsonp',
+                        inCharset:'utf-8',
+                        outCharset:'utf-8',
+                        notice:0,
+                        platform:'h5',
+                        needNewCode:1,
+                        _: new Date().getTime()
+                   },
+                   jsonp:'jsonpCallback' 
+                 }).then(res=>{
+                    resolve(res);
+                 })
             })
         }
     }

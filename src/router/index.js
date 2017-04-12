@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '../components/Hello.vue'
-import qHeader from '../components/qHeader.vue'
+import topList from '../components/topList.vue'
 
 Vue.use(Router)
 
 export default new Router({
+  linkActiveClass: 'active',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -13,9 +15,9 @@ export default new Router({
       component: Hello
     },
     {
-    	path:'/detail',
-    	name:'qHeader',
-    	component:qHeader
+    	path:'/topList',
+    	name:'topList',
+    	component:topList
     }
   ]
 })
