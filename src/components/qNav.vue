@@ -1,8 +1,14 @@
 <template>
     <nav class="qNav">
-        <a href="javascript:;" :class="{current:activeIndex==1}"><router-link to="/">推荐</router-link></a>
-        <a href="javascript:;" :class="{current:activeIndex==2}"><router-link to="/topList">排行榜</router-link></a>
-        <a href="javascript:;" :class="{current:activeIndex==3}"><router-link to="/search">搜索</router-link></a>
+        <a href="javascript:;" :class="{current:activeIndex==1}">
+            <router-link to="/">推荐</router-link>
+        </a>
+        <a href="javascript:;" :class="{current:activeIndex==2}">
+            <router-link to="/topList">排行榜</router-link>
+        </a>
+        <a href="javascript:;" :class="{current:activeIndex==3}">
+            <router-link to="/search">搜索</router-link>
+        </a>
     </nav>
 </template>
 <script>
@@ -13,10 +19,10 @@ export default {
             msg: '123'
         }
     },
-    computed:{
-       activeIndex(){
-         return this.$store.state.activeIndex
-       } 
+    computed: {
+        activeIndex() {
+            return this.$store.state.activeIndex
+        }
     }
 }
 </script>
@@ -24,6 +30,7 @@ export default {
 .qNav {
     background-color: #fff;
     display: flex;
+    flex-shrink: 0;
     >a {
         flex: 1;
         color: #333;
@@ -45,11 +52,11 @@ export default {
                 background-color: #31c27c;
             }
         }
-        >a{
-            width:100%;
-            display:inline-block;
-            text-decoration:none;
-            color:#333;
+        >a {
+            width: 100%;
+            display: inline-block;
+            text-decoration: none;
+            color: #333;
         }
     }
 }

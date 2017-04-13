@@ -34,7 +34,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .footer{
- background-color: #31c27c;
+width: 100%;
+align-self:flex-end;
+    background-color: #31c27c;
 }
    .miniPlay{
     display:flex;

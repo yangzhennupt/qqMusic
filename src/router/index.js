@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Hello from '../components/Hello.vue'
-import topList from '../components/topList.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Hello from '../components/Hello.vue';
+import topList from '../components/topList.vue';
+import topDetail from '../components/topDetail.vue';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  linkActiveClass: 'active',
   mode: 'history',
   routes: [
     {
@@ -18,6 +18,11 @@ export default new Router({
     	path:'/topList',
     	name:'topList',
     	component:topList
+    },
+      {
+      path:'/topDetail',
+      name:'topDetail',
+      component:topDetail
     }
   ]
 })

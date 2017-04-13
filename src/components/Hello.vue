@@ -1,5 +1,8 @@
 <template>
     <div class="warp">
+        <div class="loading" v-show="loading">
+            <img src="../assets/loading/ball-triangle.svg" alt="">
+        </div>
         <swiper :options="swiperOption">
             <swiper-slide v-for="slide in swiperSlides" :key="slide.id"><img :src="slide.picUrl" class="slide-img"></swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
@@ -26,16 +29,18 @@ export default {
                 pagination: '.swiper-pagination',
                 autoplayDisableOnInteraction: false
             },
-            swiperSlides: []
+            swiperSlides: [],
+            loading: true
         }
     },
     created() {
         this.$store.dispatch('getData').then(res => {
             this.swiperSlides = res.data.data.slider;
+            this.loading = false;
         });
     },
     mounted() {
-         this.$store.commit('changeActiveIndex',1);
+        this.$store.commit('changeActiveIndex', 1);
     }
 }
 </script>
