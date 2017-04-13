@@ -7,7 +7,7 @@ import topDetail from '../components/topDetail.vue';
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+   
   routes: [
     {
       path: '/',
