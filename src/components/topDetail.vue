@@ -65,7 +65,8 @@ export default {
     methods: {
         chooseSong(songid) {
          this.$store.commit('changAudio',songid);
-         this.$store.commit('play');
+         this.$store.commit('play',true);
+         this.$store.state.dom.play();
         }
     }
 }

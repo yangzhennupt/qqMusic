@@ -39,9 +39,6 @@ export default {
       },
       isPlay(){
         return this.$store.state.isPlay;
-      },
-      audioDom(){
-        return this.$store.state.dom;
       }
     }
 }
