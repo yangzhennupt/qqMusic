@@ -10,7 +10,7 @@
         </div>
         <!-- 底部mini播放器 -->
         <qFooter></qFooter>
-        <audio src="http://m2.music.126.net/K1SFXCvWf8BO9VEpSvx2ew==/7967061257205150.mp3" autoplay=true class="audio" id="hh"></audio>
+        <audio :src="audio.src||defaultSrc"  ref="audio" :autoplay="isPlay"></audio>
     </div>
 </template>
 <script>
@@ -19,13 +19,30 @@ import qNav from './components/qNav.vue';
 import qFooter from './components/qFooter.vue';
 export default {
     name: 'app',
+    data(){
+        return{
+            defaultSrc:""
+        }
+    },
     components: {
         qHeader,
         qNav,
         qFooter
     },
+    mounted(){
+        this.$store.commit('getDom',this.$refs.audio);
+      
+    },
     computed: {
-
+      audio(){
+        return this.$store.state.audio;
+      },
+      isPlay(){
+        return this.$store.state.isPlay;
+      },
+      audioDom(){
+        return this.$store.state.dom;
+      }
     }
 }
 </script>
@@ -37,8 +54,10 @@ export default {
 }
 
 .mainContent {
-    height: 582px;
+   
     position: relative;
+        flex: 20;
+        overflow: auto;
 }
 
 #app {
@@ -48,6 +67,7 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
+        box-shadow: 0 0 15px #6d6969;
 }
 
 body {

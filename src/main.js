@@ -25,7 +25,12 @@ const store = new Vuex.Store({
         activeIndex: 0,
         songData: null,
         isShowminiPlay: true,
-        topId: 0
+        topId: 0,
+        audio:{
+            src:""
+        },
+        isPlay:false,
+        dom:{}
     },
     mutations: {
         getAll(state, obj) {
@@ -37,6 +42,15 @@ const store = new Vuex.Store({
         },
         changShowminiPlay(state, flag) {
             state.isShowminiPlay = flag;
+        },
+        changAudio(state,songid){
+           state.audio.src="http://ws.stream.qqmusic.qq.com/"+songid+".m4a?fromtag=46";
+        },
+        play(state,flag){
+            state.isPlay=flag;            
+        },
+        getDom(state,dom){
+            state.dom=dom;
         }
     },
     actions: {

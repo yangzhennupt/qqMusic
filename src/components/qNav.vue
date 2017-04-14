@@ -31,6 +31,7 @@ export default {
     background-color: #fff;
     display: flex;
     flex-shrink: 0;
+
     >a {
         flex: 1;
         color: #333;

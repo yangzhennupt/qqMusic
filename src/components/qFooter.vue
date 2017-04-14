@@ -8,7 +8,7 @@
            
          </div>
          <div class="music-option">
-           
+            <button :class="[isPlay?playIcon:pauseIcon]" @click="play()">播放</button>
          </div>
      </div>
     
@@ -20,12 +20,25 @@ export default {
   name: 'footer',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      playIcon: 'playStyle',
+      pauseIcon:'pauseStyle'
     }
   },
   computed:{
     isShowminiPlay(){
        return this.$store.state.isShowminiPlay
+    },
+    isPlay(){
+      return this.$store.state.isPlay
+    },
+    getDom(){
+      return this.$store.state.dom;
+    }
+  },
+  methods:{
+    play(){
+      this.$store.commit('play',!this.isPlay);
+      !this.isPlaying ? this.getDom.pause() : this.getDom.play();
     }
   }
 }
@@ -35,23 +48,27 @@ export default {
 <style scoped lang="scss">
 .footer{
 width: 100%;
-align-self:flex-end;
+
     background-color: #31c27c;
+    flex-shrink: 0;
+
 }
    .miniPlay{
     display:flex;
     justify-content:space-between;
-    height: 70px;
-    line-height: 70px;
+    height: 60px;
+    line-height: 60px;
      align-items: center;
+         padding-left: 10px;
     .music-img{
-       width: 65px;
-       height: 65px;
+       width: 50px;
+       height: 50px;
       
        img{
          border-radius: 50%;
          width: 100%;
          height: 100%;
+       
        }
     }
     .music-info{

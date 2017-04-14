@@ -23,6 +23,7 @@ export default {
     height: 44px;
     align-items: center;
     flex-shrink: 0;
+ 
     .logo {
         background: url(./logo.png) no-repeat;
         height: 25px;

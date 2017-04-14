@@ -36,7 +36,7 @@ export default {
             this.topListInfo = res.data.data.topList;
             this.loading = false;
         });
-        console.log(document.querySelector('audio'));
+      
     },
     methods: {
         toTopDetail(topId) {
@@ -54,7 +54,7 @@ export default {
     width: 100%;
     >ul {
         overflow-y: auto;
-        height: 582px;
+        
         list-style: none;
         padding: 0;
         margin: 0;
