@@ -53,12 +53,17 @@ export default {
 }
 
 .playStyle {
-
+   background: url(../assets/pause.png);
+   width: 35px;
+   height: 35px;
+   display: inline-block;
 }
 
 .pauseStyle {
- 
-    
+ background: url(../assets/play.png);
+   width: 35px;
+   height: 35px;
+   display: inline-block; 
 }
 
 .miniPlay {
@@ -82,6 +87,8 @@ export default {
     }
     .music-option {
         flex: 1;
+        display: flex;
+
     }
 }
 </style>

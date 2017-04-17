@@ -10,7 +10,7 @@
         </div>
         <!-- 底部mini播放器 -->
         <qFooter></qFooter>
-        <audio :src="audio.src||defaultSrc"  ref="audio" :autoplay="isPlay"></audio>
+        <audio :src="audio.src||defaultSrc"  ref="audio" :autoplay="isPlay" @ended="hasEnd"></audio>
     </div>
 </template>
 <script>
@@ -40,6 +40,11 @@ export default {
       isPlay(){
         return this.$store.state.isPlay;
       }
+    },
+    methods:{
+      hasEnd(){
+         this.$store.state.isPlay=false;
+      }
     }
 }
 </script>
@@ -64,7 +69,7 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
-        box-shadow: 0 0 15px #6d6969;
+    box-shadow: 0 0 15px #6d6969;
 }
 
 body {

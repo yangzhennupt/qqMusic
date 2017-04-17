@@ -8,7 +8,7 @@
                 <img :src="detailImg">
                 <div class="top-info" :style="{background:mask}">
                     <h6>{{topName}}</h6>
-                    <p>{{date}} 更新</p>
+                    <p class="updateTime">{{date}} 更新</p>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ export default {
         });
     },
     mounted() {
-        
+
     },
     computed: {
         color() {
@@ -124,6 +124,7 @@ export default {
     //flex: 1;
     //height: 30%;
     flex-grow: 1;
+    //height: 200px;
     .imgContent {
         position: relative;
         height: 100%;
@@ -151,6 +152,10 @@ export default {
             p {
                 color: #fff;
                 padding-left: 20px;
+                &.updateTime {
+                    padding-bottom: 20px;
+                    border-bottom: 1px solid rgba(187, 187, 187, .5);
+                }
             }
         }
     }
@@ -192,7 +197,7 @@ export default {
                     line-height: 25px;
                     text-align: left;
                     overflow: hidden;
-                    padding-right: 40px;
+                   // padding-right: 40px;
                     p {
                         margin: 0;
                         overflow: hidden;
@@ -204,6 +209,8 @@ export default {
                         }
                         &.singer {
                             color: #bbb;
+                            border-bottom: 1px solid rgba(251, 251, 251, .5);
+                            padding-bottom: 5px;
                         }
                         span {
                             margin-right: 5px;
