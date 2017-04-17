@@ -27,7 +27,8 @@ export default {
                 autoplay: 3500,
                 setWrapperSize: true,
                 pagination: '.swiper-pagination',
-                autoplayDisableOnInteraction: false
+                autoplayDisableOnInteraction: false,
+                loop:true
             },
             swiperSlides: [],
             loading: true

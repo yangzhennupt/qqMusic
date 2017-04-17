@@ -1,7 +1,7 @@
 <template>
     <div class="qHeader">
         <div class="logo"></div>
-        <div class="download">下载APP</div>
+        <div class="download">Github</div>
     </div>
 </template>
 <script>
@@ -25,7 +25,7 @@ export default {
     flex-shrink: 0;
  
     .logo {
-        background: url(./logo.png) no-repeat;
+        background: url(../assets/logo.png) no-repeat;
         height: 25px;
         width: 90px;
         background-size: cover;

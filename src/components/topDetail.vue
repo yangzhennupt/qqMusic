@@ -6,21 +6,21 @@
         <div class="top-head" v-show="!loading">
             <div class="imgContent">
                 <img :src="detailImg">
-                <div class="top-info">
+                <div class="top-info" :style="{background:mask}">
                     <h6>{{topName}}</h6>
                     <p>{{date}} 更新</p>
                 </div>
             </div>
         </div>
-        <ul>
-            <li v-for="(item,index) in songList" @click="chooseSong(item.data.songid)">
-                <div class="song-info">
+        <ul :style="{background:color}">
+            <li v-for="(item,index) in songList" @click="chooseSong(item.data.songid,item.data.albummid)">
+                <div class="song-info" :class="{dark:isDark}">
                     <div class="song-no">
                         {{index+1}}
                     </div>
                     <div class="song-detail">
-                        <p>{{item.data.songname}}</p>
-                        <p><span v-for="songer in item.data.singer">{{songer.name}}</span></p>
+                        <p class="song-name">{{item.data.songname}}</p>
+                        <p class="singer"><span v-for="songer in item.data.singer">{{songer.name}}</span></p>
                     </div>
                 </div>
             </li>
@@ -37,7 +37,8 @@ export default {
             loading: true,
             detailImg: '',
             topName: '',
-            date: ''
+            date: '',
+            topListData: null
         }
     },
     created() {
@@ -52,21 +53,54 @@ export default {
                     return
                 }
             });
+            this.$store.state.playList = this.songList;
+            this.topListData = res.data;
             this.topName = res.data.topinfo.ListName;
             this.date = res.data.date;
             this.detailImg = res.data.topinfo.pic_album;
             this.loading = false;
+
         });
     },
     mounted() {
         
+    },
+    computed: {
+        color() {
+            if (this.topListData != null) {
+                var fixed = '00000' + this.topListData.color.toString(16)
+                return '#' + fixed.substr(fixed.length - 6)
+            } else {
+                return '#ffffff'
+            }
+        },
+        mask() {
+
+            return 'linear-gradient(to bottom,rgba(' + this.r + ',' + this.g + ',' + this.b + ',0' + '),' + this.color + ')';
+        },
+        r() {
+            return parseInt(this.color.slice(1, 3), 16)
+        },
+        g() {
+            return parseInt(this.color.slice(3, 5), 16)
+        },
+        b() {
+            return parseInt(this.color.slice(5, 7), 16)
+        },
+        isDark() {
+            var grayLevel = this.r * 0.299 + this.g * 0.587 + this.b * 0.114
+            return (grayLevel < 192)
+        }
 
     },
     methods: {
-        chooseSong(songid) {
-         this.$store.commit('changAudio',songid);
-         this.$store.commit('play',true);
-         this.$store.state.dom.play();
+        chooseSong(songid, albummid) {
+            this.$store.commit('changAudio', {
+                "songid": songid,
+                "albummid": albummid
+            });
+            this.$store.commit('play', true);
+            this.$store.state.dom.play();
         }
     }
 }
@@ -87,8 +121,9 @@ export default {
 
 .top-head {
     width: 100%;
-    flex: 1;
-    height: 40%;
+    //flex: 1;
+    //height: 30%;
+    flex-grow: 1;
     .imgContent {
         position: relative;
         height: 100%;
@@ -103,7 +138,9 @@ export default {
             text-align: left;
             right: 0;
             z-index: 3;
-            background: linear-gradient(to right, rgba(76, 202, 141, 1), rgba(131, 139, 150, .8));
+            font-size: 14px;
+            //background: liner-gradient(to right,rgba(66,34,129,1),rgba(131, 139, 150, .8));
+            // background: -webkit-linear-gradient(to right, rgba(66, 34, 129, 1), rgba(131, 139, 150, .8));
             h6 {
                 font-size: 20px;
                 margin: 0;
@@ -137,11 +174,41 @@ export default {
                 align-items: center;
                 // width: 100%;
                 flex: 1;
-                background: #fff;
+                //background: #fff;
                 margin-bottom: 10px;
-                .song-no {}
+                justify-content: space-between;
+                overflow: hidden;
+                .song-no {
+                    width: 50px;
+                    text-align: center;
+                    flex-shrink: 0;
+                    color: #fff;
+                }
                 .song-detail {
-                    p {}
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+                    height: 100%;
+                    line-height: 25px;
+                    text-align: left;
+                    overflow: hidden;
+                    padding-right: 40px;
+                    p {
+                        margin: 0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: 100%;
+                        &.song-name {
+                            color: #fff;
+                        }
+                        &.singer {
+                            color: #bbb;
+                        }
+                        span {
+                            margin-right: 5px;
+                        }
+                    }
                 }
             }
         }

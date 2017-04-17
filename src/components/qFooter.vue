@@ -2,12 +2,12 @@
     <div class="footer">
         <div class="miniPlay" v-if="isShowminiPlay">
             <div class="music-img">
-                <img src="http://imgcache.qq.com/music/photo/album_300/82/300_albumpic_1677982_0.jpg" alt="">
+                <img :src="imgurl" alt="">
             </div>
             <div class="music-info">
             </div>
             <div class="music-option">
-                <button :class="[isPlay?playIcon:pauseIcon]" @click="play()">播放</button>
+                <i :class="[isPlay?playIcon:pauseIcon]" @click="play()"></i>
             </div>
         </div>
     </div>
@@ -30,12 +30,15 @@ export default {
         },
         getDom() {
             return this.$store.state.dom;
+        },
+        imgurl(){
+            return this.$store.state.audio.imgurl;
         }
     },
     methods: {
         play() {
 
-            this.$store.commit('play',!this.isPlay);
+            this.$store.commit('play', !this.isPlay);
             this.isPlay ? this.getDom.play() : this.getDom.pause();
         }
     }
@@ -48,12 +51,14 @@ export default {
     background-color: #31c27c;
     flex-shrink: 0;
 }
-.playStyle{
- background: green;
-}
-.pauseStyle{
-  background: red;
 
+.playStyle {
+
+}
+
+.pauseStyle {
+ 
+    
 }
 
 .miniPlay {

@@ -27,10 +27,13 @@ const store = new Vuex.Store({
         isShowminiPlay: true,
         topId: 0,
         audio:{
-            src:""
+            src:"",
+            imgurl:""
         },
         isPlay:false,
-        dom:{}
+        dom:{},
+        topList:[],
+        color:null
     },
     mutations: {
         getAll(state, obj) {
@@ -43,8 +46,9 @@ const store = new Vuex.Store({
         changShowminiPlay(state, flag) {
             state.isShowminiPlay = flag;
         },
-        changAudio(state,songid){
-           state.audio.src="http://ws.stream.qqmusic.qq.com/"+songid+".m4a?fromtag=46";
+        changAudio(state,obj){
+           state.audio.src="http://ws.stream.qqmusic.qq.com/"+obj.songid+".m4a?fromtag=46";
+           state.audio.imgurl="https://y.gtimg.cn/music/photo_new/T002R500x500M000"+obj.albummid+".jpg"
         },
         play(state,flag){
             state.isPlay=flag;            
