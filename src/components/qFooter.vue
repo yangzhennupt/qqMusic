@@ -2,7 +2,7 @@
     <div class="footer">
         <div class="miniPlay" v-if="isShowminiPlay">
             <div class="music-img">
-                <img :src="imgurl" alt="">
+                <img :src="imgurl || defaultImg" alt="">
             </div>
             <div class="music-info">
             </div>
@@ -18,7 +18,8 @@ export default {
     data() {
         return {
             playIcon: 'playStyle',
-            pauseIcon: 'pauseStyle'
+            pauseIcon: 'pauseStyle',
+            defaultImg: '/static/music.svg'
         }
     },
     computed: {
@@ -31,15 +32,17 @@ export default {
         getDom() {
             return this.$store.state.dom;
         },
-        imgurl(){
+        imgurl() {
             return this.$store.state.audio.imgurl;
         }
     },
     methods: {
         play() {
+            if (this.$store.state.audio.src != "") {
+                this.$store.commit('play', !this.isPlay);
+                this.isPlay ? this.getDom.play() : this.getDom.pause();
+            }
 
-            this.$store.commit('play', !this.isPlay);
-            this.isPlay ? this.getDom.play() : this.getDom.pause();
         }
     }
 }
@@ -53,17 +56,19 @@ export default {
 }
 
 .playStyle {
-   background: url(../assets/pause.png);
-   width: 35px;
-   height: 35px;
-   display: inline-block;
+    background: url(../assets/media-pause.svg) no-repeat;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-size: contain;
 }
 
 .pauseStyle {
- background: url(../assets/play.png);
-   width: 35px;
-   height: 35px;
-   display: inline-block; 
+    background: url(../assets/media-play.svg) no-repeat;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-size: contain;
 }
 
 .miniPlay {
@@ -88,7 +93,6 @@ export default {
     .music-option {
         flex: 1;
         display: flex;
-
     }
 }
 </style>

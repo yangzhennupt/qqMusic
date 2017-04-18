@@ -10,7 +10,7 @@
         </div>
         <!-- 底部mini播放器 -->
         <qFooter></qFooter>
-        <audio :src="audio.src||defaultSrc"  ref="audio" :autoplay="isPlay" @ended="hasEnd"></audio>
+        <audio :src="audio.src||defaultSrc"  ref="audio" :autoplay="isPlay" @ended="hasEnd" ></audio>
     </div>
 </template>
 <script>
@@ -44,6 +44,10 @@ export default {
     methods:{
       hasEnd(){
          this.$store.state.isPlay=false;
+         this.nextSong();
+      },
+      nextSong(){
+        console.log('next');
       }
     }
 }

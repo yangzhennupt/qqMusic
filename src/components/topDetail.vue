@@ -209,7 +209,7 @@ export default {
                         }
                         &.singer {
                             color: #bbb;
-                            border-bottom: 1px solid rgba(251, 251, 251, .5);
+                            border-bottom: 1px solid rgba(158, 158, 158, 0.5);
                             padding-bottom: 5px;
                         }
                         span {

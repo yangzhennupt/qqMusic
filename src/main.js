@@ -26,14 +26,16 @@ const store = new Vuex.Store({
         songData: null,
         isShowminiPlay: true,
         topId: 0,
-        audio:{
-            src:"",
-            imgurl:""
+        audio: {
+            src: "",
+            imgurl: "",
+            time: "",
+            name: ""
         },
-        isPlay:false,
-        dom:{},
-        topList:[],
-        color:null
+        isPlay: false,
+        dom: {},
+        topList: [],
+        color: null
     },
     mutations: {
         getAll(state, obj) {
@@ -46,15 +48,15 @@ const store = new Vuex.Store({
         changShowminiPlay(state, flag) {
             state.isShowminiPlay = flag;
         },
-        changAudio(state,obj){
-           state.audio.src="http://ws.stream.qqmusic.qq.com/"+obj.songid+".m4a?fromtag=46";
-           state.audio.imgurl="https://y.gtimg.cn/music/photo_new/T002R500x500M000"+obj.albummid+".jpg"
+        changAudio(state, obj) {
+            state.audio.src = "http://ws.stream.qqmusic.qq.com/" + obj.songid + ".m4a?fromtag=46";
+            state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000" + obj.albummid + ".jpg"
         },
-        play(state,flag){
-            state.isPlay=flag;            
+        play(state, flag) {
+            state.isPlay = flag;
         },
-        getDom(state,dom){
-            state.dom=dom;
+        getDom(state, dom) {
+            state.dom = dom;
         }
     },
     actions: {
@@ -122,6 +124,29 @@ const store = new Vuex.Store({
                 }).then(res => {
                     resolve(res);
                 });
+            })
+        },
+        getHotList() {
+            return new Promise((resolve, reject) => {
+                Vue.http.jsonp('https://c.y.qq.com/v8/fcg-bin/fcg_first_yqq.fcg', {
+                    params: {
+                        format: 'jsonp',
+                        tpl: 'v12',
+                        page: 'other',
+                        rnd: 0,
+                        g_tk: new Date().getTime(),
+                        loginUin: 0,
+                        hostUin: 0,
+                        inCharset: 'utf8',
+                        outCharset: 'GB2312',
+                        notice: 0,
+                        platform: 'yqq',
+                        needNewCode: 0
+                    },
+                    jsonp: 'jsonpCallback'
+                }).then(res=>{
+                    resolve(res);
+                })
             })
         }
     }

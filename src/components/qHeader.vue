@@ -28,7 +28,7 @@ export default {
         background: url(../assets/logo.png) no-repeat;
         height: 25px;
         width: 90px;
-        background-size: cover;
+        background-size: contain;
         margin-left: 20px;
     }
     .download {

@@ -4,9 +4,23 @@
             <img src="../assets/loading/ball-triangle.svg" alt="">
         </div>
         <swiper :options="swiperOption">
-            <swiper-slide v-for="slide in swiperSlides" :key="slide.id"><img :src="slide.picUrl" class="slide-img"></swiper-slide>
+            <swiper-slide v-for="slide in swiperSlides" :key="slide.id"><img :src="slide.pic" class="slide-img"></swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
+        <h5>热门歌单</h5>
+        <div class="hotdissWarp">
+            <ul>
+                <li v-for="item in hotdiss" :key="item.dissid">
+                    <div class="hotImg">
+                        <img :src="item.imgurl" :alt="item.dissname">
+                    </div>
+                    <div class="hotInfo">
+                        <p>{{item.dissname}}</p>
+                        <p>{{item.author}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
@@ -28,17 +42,23 @@ export default {
                 setWrapperSize: true,
                 pagination: '.swiper-pagination',
                 autoplayDisableOnInteraction: false,
-                loop:true
+                loop: true
             },
             swiperSlides: [],
-            loading: true
+            loading: true,
+            hotdiss: []
         }
     },
     created() {
-        this.$store.dispatch('getData').then(res => {
-            this.swiperSlides = res.data.data.slider;
+        // this.$store.dispatch('getData').then(res => {
+        //     this.swiperSlides = res.data.data.slider;
+        //     this.loading = false;
+        // });
+        this.$store.dispatch('getHotList').then(res => {
+            this.swiperSlides = res.data.data.focus;
+            this.hotdiss = res.data.data.hotdiss.list;
             this.loading = false;
-        });
+        })
     },
     mounted() {
         this.$store.commit('changeActiveIndex', 1);
@@ -49,5 +69,31 @@ export default {
 <style lang="scss" scoped>
 .slide-img {
     width: 100%;
+}
+
+.hotdissWarp {
+    ul {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        li{
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            .hotImg{
+                img{
+                    width: 100%;
+                }
+            }
+            .hotInfo{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        }
+    }
 }
 </style>
