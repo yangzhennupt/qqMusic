@@ -7,7 +7,7 @@
             <swiper-slide v-for="slide in swiperSlides" :key="slide.id"><img :src="slide.pic" class="slide-img"></swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
-        <h5>热门歌单</h5>
+        <h5 v-show="!loading">热门歌单</h5>
         <div class="hotdissWarp">
             <ul>
                 <li v-for="item in hotdiss" :key="item.dissid">
@@ -82,16 +82,39 @@ export default {
             position: relative;
             width: 50%;
             box-sizing: border-box;
+            padding: 10px;
             .hotImg{
+                overflow: hidden;
                 img{
                     width: 100%;
+                    transform: scale(1) translateZ(0);
+                    transition: transform .75s;
                 }
+            
             }
             .hotInfo{
                 position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                background: linear-gradient(to top,rgba(51, 51, 51, 1),rgba(251, 251, 251, 0.91));
+                p{
+                    white-space: nowrap;
+                    text-overflow:ellipsis;
+                    overflow: hidden;
+                    padding: 0 10px;
+                    margin: 8px;
+                }
+            }
+            &:hover{
+                .hotImg{
+                      img{
+                        transform: scale(1.07) translateZ(0);
+                        transition: transform .75s cubic-bezier(0,1,.75,1)
+                      }
+                        
+                    
+                }
             }
         }
     }
