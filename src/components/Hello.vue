@@ -78,13 +78,18 @@ export default {
         display: flex;
         flex-wrap: wrap;
         list-style: none;
+        margin-right: 10px;
         li{
             position: relative;
             width: 50%;
             box-sizing: border-box;
             padding: 10px;
+            padding-right: 0;
+            display: flex;
+            flex-direction:column;
             .hotImg{
                 overflow: hidden;
+                flex:1;
                 img{
                     width: 100%;
                     transform: scale(1) translateZ(0);
@@ -93,11 +98,12 @@ export default {
             
             }
             .hotInfo{
-                position: absolute;
-                bottom: 10px;
-                left: 10px;
-                right: 10px;
-                background: linear-gradient(to top,rgba(51, 51, 51, 1),rgba(251, 251, 251, 0.91));
+                // position: absolute;
+                // bottom: 10px;
+                // left: 10px;
+                // right: 0;
+                // background: linear-gradient(to top,rgba(51, 51, 51, 1),rgba(251, 251, 251, 0.91));
+                background: #fff;
                 p{
                     white-space: nowrap;
                     text-overflow:ellipsis;
@@ -116,6 +122,7 @@ export default {
                     
                 }
             }
+           
         }
     }
 }

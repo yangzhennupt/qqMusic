@@ -119,57 +119,58 @@ export default {
     }
 }
 
-.top-head {
-    width: 100%;
-    //flex: 1;
-    //height: 30%;
-    flex-grow: 1;
-    //height: 200px;
-    .imgContent {
-        position: relative;
-        height: 100%;
-        img {
-            width: 100%;
-            height: 100%;
-        }
-        .top-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            text-align: left;
-            right: 0;
-            z-index: 3;
-            font-size: 14px;
-            //background: liner-gradient(to right,rgba(66,34,129,1),rgba(131, 139, 150, .8));
-            // background: -webkit-linear-gradient(to right, rgba(66, 34, 129, 1), rgba(131, 139, 150, .8));
-            h6 {
-                font-size: 20px;
-                margin: 0;
-                padding-left: 20px;
-                margin-top: 10px;
-                color: #fff;
-            }
-            p {
-                color: #fff;
-                padding-left: 20px;
-                &.updateTime {
-                    padding-bottom: 20px;
-                    border-bottom: 1px solid rgba(187, 187, 187, .5);
-                }
-            }
-        }
-    }
-}
-
 .topDetail {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    .top-head {
+        width: 100%;
+        //flex: 1;
+        //height: 30%;
+         flex: 0 0 50%;
+         height: 50%;
+        //height: 200px;
+        .imgContent {
+            position: relative;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            .top-info {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                text-align: left;
+                right: 0;
+                z-index: 3;
+                font-size: 14px;
+                //background: liner-gradient(to right,rgba(66,34,129,1),rgba(131, 139, 150, .8));
+                // background: -webkit-linear-gradient(to right, rgba(66, 34, 129, 1), rgba(131, 139, 150, .8));
+                h6 {
+                    font-size: 20px;
+                    margin: 0;
+                    padding-left: 20px;
+                    margin-top: 10px;
+                    color: #fff;
+                }
+                p {
+                    color: #fff;
+                    padding-left: 20px;
+                    &.updateTime {
+                        padding-bottom: 20px;
+                        border-bottom: 1px solid rgba(187, 187, 187, .5);
+                    }
+                }
+            }
+        }
+    }
     ul {
-        flex: 1;
+         flex: 0 0 50%;
         margin: 0;
         padding: 0;
+        //overflow-y: scroll;
         li {
             display: flex;
             height: 60px;
@@ -197,7 +198,7 @@ export default {
                     line-height: 25px;
                     text-align: left;
                     overflow: hidden;
-                   // padding-right: 40px;
+                    // padding-right: 40px;
                     p {
                         margin: 0;
                         overflow: hidden;

@@ -19,7 +19,7 @@ export default {
         return {
             playIcon: 'playStyle',
             pauseIcon: 'pauseStyle',
-            defaultImg: '/static/music.svg'
+            defaultImg: './static/default.jpg'
         }
     },
     computed: {
