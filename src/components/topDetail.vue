@@ -114,6 +114,8 @@ export default {
     right: 0;
     display: flex;
     align-items: center;
+    z-index: 1000;
+    background: #fff;
     img {
         margin: 0 auto;
     }

@@ -148,6 +148,27 @@ const store = new Vuex.Store({
                     resolve(res);
                 })
             })
+        },
+        getHotWord(){
+            return new Promise((resolve,reject)=>{
+                Vue.http.jsonp('https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg',{
+                    params:{
+
+                    g_tk:911075056,
+                    uin:550994952,
+                    format:'jsonp',
+                    inCharset:'utf-8',
+                    outCharset:'utf-8',
+                    notice:0,
+                    platform:'h5',
+                    needNewCode:1,
+                    _:new Date().getTime()
+                    },
+                    jsonp:'jsonpCallback'
+                }).then(res=>{
+                    resolve(res);
+                })
+            })
         }
     }
 });
