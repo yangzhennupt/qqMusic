@@ -1,7 +1,7 @@
 <template>
     <div class="qHeader">
         <div class="logo"></div>
-        <div class="download">Github</div>
+        <div class="download" @click="toGit">Github</div>
     </div>
 </template>
 <script>
@@ -10,6 +10,11 @@ export default {
     data() {
         return {
             msg: 'dddddd3123122223123123'
+        }
+    },
+    methods:{
+        toGit(){
+            window.open('https://github.com/yangzhennupt/qqMusic');
         }
     }
 }
@@ -38,6 +43,7 @@ export default {
         padding: 3px 8px;
         border-radius: 6px;
         margin-right: 20px;
+        cursor: pointer;
     }
 }
 </style>
