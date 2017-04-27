@@ -169,6 +169,28 @@ const store = new Vuex.Store({
                     resolve(res);
                 })
             })
+        },
+        getSearchResult(state,{keys}){
+          return new Promise((resolve,reject)=>{
+            Vue.http.jsonp('https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg',{
+                params:{
+                    is_xml:0,
+                    format:'jsonp',
+                    key:keys,
+                    g_tk:5381,
+                    loginUin:0,
+                    hostUin:0,
+                    inCharset:'utf8',
+                    outCharset:'utf-8',
+                    notice:0,
+                    platform:'yqq',
+                    needNewCode:0
+                },
+                jsonp:'jsonpCallback'
+            }).then(res=>{
+                resolve(res);
+            })
+          })
         }
     }
 });

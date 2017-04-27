@@ -4,17 +4,25 @@
             <img src="../assets/loading/ball-triangle.svg" alt="">
         </div>
         <div class="search-input">
-            <input type="text" placeholder="搜索歌曲、歌单、专辑" @focus="changStatus" @blur="changStatus">
+            <input v-model="searchKey" type="text" placeholder="搜索歌曲、歌单、专辑" @focus="changStatus" @blur="changStatus"  @keyup.enter="doSearch(searchKey)">
             <i></i>
-            <span class="cancel" v-show="isFocus"></span>
+            <span class="cancel" v-show="isFocus&&!isSearch"></span>
         </div>
-        <div class="hot-word">
-            <div class="word-warp" v-show="!isFocus">
+        <div class="hot-word"  v-show="!isFocus&&!isSearch">
+            <div class="word-warp">
                 <h6 v-show="!loading">热门搜索</h6>
                 <div class="label-content">
                     <span class="special">{{hotWord.special_key}}</span>
                     <span v-for="item in hotkey">{{item.k}}</span>
                 </div>
+            </div>
+        </div>
+        <div class="search-list" v-show="isSearch">
+            <div class="noResut" v-show="!searchResult.song">
+              抱歉，没有结果...
+            </div>
+            <div class="hasResult">
+              
             </div>
         </div>
     </div>
@@ -26,17 +34,22 @@ export default {
                 loading: true,
                 hotWord: {},
                 isFocus: false,
-                hotkey: []
+                hotkey: [],
+                searchKey:'',
+                searchResult:{},
+                isSearch:false
             }
         },
-        computed: {},
+        computed: {
+
+        },
         created() {
             this.$store.commit('changeActiveIndex', 3);
             this.$store.dispatch('getHotWord').then(res => {
                 this.hotWord = res.data.data;
                 this.hotkey = res.data.data.hotkey.slice(0, 10);
                 this.loading = false;
-                console.log(res.data.data);
+          
             })
         },
         mounted() {
@@ -45,6 +58,16 @@ export default {
         methods: {
             changStatus() {
                 this.isFocus = !this.isFocus;
+            },
+            doSearch(searchKey){
+              if(searchKey.trim()!=""){
+                  this.$store.dispatch('getSearchResult',{keys:searchKey}).then(res=>{
+                  this.searchResult=res.data.data;
+                  this.isSearch=true;
+
+               });
+              }
+             
             }
         }
 }
