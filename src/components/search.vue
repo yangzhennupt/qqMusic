@@ -63,6 +63,7 @@ export default {
               if(searchKey.trim()!=""){
                   this.$store.dispatch('getSearchResult',{keys:searchKey}).then(res=>{
                   this.searchResult=res.data.data;
+                  console.log(this.searchResult);
                   this.isSearch=true;
 
                });
