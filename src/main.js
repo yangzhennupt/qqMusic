@@ -32,6 +32,7 @@ const store = new Vuex.Store({
             time: "",
             name: ""
         },
+        musicList:[],
         isPlay: false,
         dom: {},
         topList: [],
@@ -57,6 +58,12 @@ const store = new Vuex.Store({
         },
         getDom(state, dom) {
             state.dom = dom;
+        },
+        addPlayList(state,obj){
+            obj.forEach(function(item){
+             state.musicList=state.musicList.push(item);
+            });
+            
         }
     },
     actions: {

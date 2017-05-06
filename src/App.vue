@@ -10,7 +10,7 @@
         </div>
         <!-- 底部mini播放器 -->
         <qFooter></qFooter>
-        <audio :src="audio.src||defaultSrc"  ref="audio" :autoplay="isPlay" @ended="hasEnd" ></audio>
+        <audio :src="audio.src||defaultSrc" ref="audio" :autoplay="isPlay" @ended="hasEnd"></audio>
     </div>
 </template>
 <script>
@@ -19,9 +19,9 @@ import qNav from './components/qNav.vue';
 import qFooter from './components/qFooter.vue';
 export default {
     name: 'app',
-    data(){
-        return{
-            defaultSrc:""
+    data() {
+        return {
+            defaultSrc: ""
         }
     },
     components: {
@@ -29,26 +29,30 @@ export default {
         qNav,
         qFooter
     },
-    mounted(){
-        this.$store.commit('getDom',this.$refs.audio);
-      
+    mounted() {
+        this.$store.commit('getDom', this.$refs.audio);
+
     },
     computed: {
-      audio(){
-        return this.$store.state.audio;
-      },
-      isPlay(){
-        return this.$store.state.isPlay;
-      }
+        audio() {
+            return this.$store.state.audio;
+        },
+        isPlay() {
+            return this.$store.state.isPlay;
+        },
+        musicList() {
+            return this.$store.state.MusicList;
+        }
     },
-    methods:{
-      hasEnd(){
-         this.$store.state.isPlay=false;
-         this.nextSong();
-      },
-      nextSong(){
-        console.log('next');
-      }
+    methods: {
+        hasEnd() {
+            this.$store.state.isPlay = false;
+            this.nextSong();
+        },
+        nextSong(){
+   
+
+        }
     }
 }
 </script>
@@ -60,10 +64,9 @@ export default {
 }
 
 .mainContent {
-   
     position: relative;
-        flex: 20;
-        overflow: auto;
+    flex: 20;
+    overflow: auto;
 }
 
 #app {

@@ -9,6 +9,7 @@
                 <div class="top-info" :style="{background:mask}">
                     <h6>{{topName}}</h6>
                     <p class="updateTime">{{date}} 更新</p>
+                    <button @click="playAll()">播放全部</button>
                 </div>
             </div>
         </div>
@@ -101,6 +102,10 @@ export default {
             });
             this.$store.commit('play', true);
             this.$store.state.dom.play();
+        },
+        playAll(){
+            this.$store.state.musicList=this.songList;
+            
         }
     }
 }
