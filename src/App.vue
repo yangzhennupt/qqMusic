@@ -41,7 +41,7 @@ export default {
             return this.$store.state.isPlay;
         },
         musicList() {
-            return this.$store.state.MusicList;
+            return this.$store.state.musicList;
         }
     },
     methods: {
@@ -50,7 +50,11 @@ export default {
             this.nextSong();
         },
         nextSong(){
-   
+            this.$store.commit('changeMusic',++this.$store.state.audio.index);
+            //改变播放状态
+            this.$store.commit('play', true);
+            //播放
+            this.$store.state.dom.play();
 
         }
     }

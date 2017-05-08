@@ -4,11 +4,16 @@
             <img src="../assets/loading/ball-triangle.svg" alt="">
         </div>
         <div class="search-input">
-            <input v-model="searchKey" type="text" placeholder="搜索歌曲、歌单、专辑" @focus="changStatus" @blur="changStatus"  @keyup.enter="doSearch(searchKey)">
+            <input v-model="searchKey" type="text" placeholder="搜索歌曲、歌单、专辑" @focus="changStatus" @blur="changStatus" @keyup.enter="doSearch(searchKey)">
             <i></i>
             <span class="cancel" v-show="isFocus&&!isSearch"></span>
         </div>
-        <div class="hot-word"  v-show="!isFocus&&!isSearch">
+        <div class="search-history">
+            <ul>
+                <li v-for=""></li>
+            </ul>
+        </div>
+        <div class="hot-word" v-show="!isFocus&&!isSearch">
             <div class="word-warp">
                 <h6 v-show="!loading">热门搜索</h6>
                 <div class="label-content">
@@ -19,10 +24,9 @@
         </div>
         <div class="search-list" v-show="isSearch">
             <div class="noResut" v-show="!searchResult.song">
-              抱歉，没有结果...
+                抱歉，没有结果...
             </div>
             <div class="hasResult">
-              
             </div>
         </div>
     </div>
@@ -35,9 +39,9 @@ export default {
                 hotWord: {},
                 isFocus: false,
                 hotkey: [],
-                searchKey:'',
-                searchResult:{},
-                isSearch:false
+                searchKey: '',
+                searchResult: {},
+                isSearch: false
             }
         },
         computed: {
@@ -49,28 +53,41 @@ export default {
                 this.hotWord = res.data.data;
                 this.hotkey = res.data.data.hotkey.slice(0, 10);
                 this.loading = false;
-          
+
             })
         },
-        mounted() {
+        computed: {
+            historyList() {
+                let hisArr = [];
+                if (localStorage.getItem('history') === null) {
+                    return hisArr;
+                } else {
+                    hisArr = JSON.parse(localStorage.getItem('history'));
+                    return hisArr;
+                }
 
-        },
-        methods: {
-            changStatus() {
-                this.isFocus = !this.isFocus;
-            },
-            doSearch(searchKey){
-              if(searchKey.trim()!=""){
-                  this.$store.dispatch('getSearchResult',{keys:searchKey}).then(res=>{
-                  this.searchResult=res.data.data;
-                  console.log(this.searchResult);
-                  this.isSearch=true;
 
-               });
-              }
-             
             }
+        },
+    methods: {
+        changStatus() {
+            this.isFocus = !this.isFocus;
+        },
+        doSearch(searchKey) {
+            if (searchKey.trim() != "") {
+                this.$store.dispatch('getSearchResult', {
+                    keys: searchKey
+                }).then(res => {
+                    this.searchResult = res.data.data;
+                    console.log(this.searchResult);
+                    this.isSearch = true;
+
+                });
+                //存localStorage
+            }
+
         }
+    }
 }
 </script>
 <style scoped lang="scss">

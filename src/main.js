@@ -30,13 +30,15 @@ const store = new Vuex.Store({
             src: "",
             imgurl: "",
             time: "",
-            name: ""
+            name: "",
+            index:-1
         },
         musicList:[],
         isPlay: false,
         dom: {},
         topList: [],
         color: null
+
     },
     mutations: {
         getAll(state, obj) {
@@ -59,11 +61,11 @@ const store = new Vuex.Store({
         getDom(state, dom) {
             state.dom = dom;
         },
-        addPlayList(state,obj){
-            obj.forEach(function(item){
-             state.musicList=state.musicList.push(item);
-            });
-            
+        changeMusic(state,index){
+            //state.audio.name = state.musicList[index].name;
+            state.audio.src = "http://ws.stream.qqmusic.qq.com/"+state.musicList[index].data.songid+".m4a?fromtag=46";
+            state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000"+state.musicList[index].data.albummid+".jpg";
+            state.audio.index = index;
         }
     },
     actions: {

@@ -9,12 +9,12 @@
                 <div class="top-info" :style="{background:mask}">
                     <h6>{{topName}}</h6>
                     <p class="updateTime">{{date}} 更新</p>
-                    <button @click="playAll()">播放全部</button>
+                    <button @click="playAll()" class="playAll">播放全部</button>
                 </div>
             </div>
         </div>
         <ul :style="{background:color}">
-            <li v-for="(item,index) in songList" @click="chooseSong(item.data.songid,item.data.albummid)">
+            <li v-for="(item,index) in songList" @click="chooseSong(item)">
                 <div class="song-info" :class="{dark:isDark}">
                     <div class="song-no">
                         {{index+1}}
@@ -95,17 +95,38 @@ export default {
 
     },
     methods: {
-        chooseSong(songid, albummid) {
+        chooseSong(item){
             this.$store.commit('changAudio', {
-                "songid": songid,
-                "albummid": albummid
+                "songid": item.data.songid,
+                "albummid": item.data.albummid
             });
+            //获取当前的index;
+            let curIndex=this.$store.state.audio.index;
+            //在当前index位置插入一个数组元素;
+            this.$store.state.musicList.splice(++curIndex,0,item);
+
+            this.$store.commit('changeMusic',curIndex);
+             
+            //改变播放状态
             this.$store.commit('play', true);
+            //播放
             this.$store.state.dom.play();
         },
         playAll(){
-            this.$store.state.musicList=this.songList;
-            
+           
+            //获取当前播放列表的长度
+            let musicLen=this.$store.state.musicList.length;
+           // let index=++this.$store.state.audio.index;
+             let index=musicLen;
+          
+             //添加歌单数组到播放列表
+            this.$store.state.musicList=this.$store.state.musicList.concat(this.songList);
+              //改变audio当前src
+            this.$store.commit('changeMusic',index);
+            //改变播放状态
+            this.$store.commit('play', true);
+            //播放
+            this.$store.state.dom.play();
         }
     }
 }
