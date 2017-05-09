@@ -10,7 +10,7 @@
         </div>
         <div class="search-history">
             <ul>
-                <li v-for=""></li>
+                <li v-for="item in historyList">{{item}}</li>
             </ul>
         </div>
         <div class="hot-word" v-show="!isFocus&&!isSearch">
@@ -41,7 +41,8 @@ export default {
                 hotkey: [],
                 searchKey: '',
                 searchResult: {},
-                isSearch: false
+                isSearch: false,
+                historyList:[]
             }
         },
         computed: {
@@ -53,20 +54,19 @@ export default {
                 this.hotWord = res.data.data;
                 this.hotkey = res.data.data.hotkey.slice(0, 10);
                 this.loading = false;
-
-            })
+            });
+            
         },
         computed: {
             historyList() {
                 let hisArr = [];
                 if (localStorage.getItem('history') === null) {
+                    localStorage.setItem('history',"[]");
                     return hisArr;
                 } else {
                     hisArr = JSON.parse(localStorage.getItem('history'));
                     return hisArr;
                 }
-
-
             }
         },
     methods: {
@@ -84,6 +84,9 @@ export default {
 
                 });
                 //存localStorage
+               let temArr=JSON.parse(localStorage.getItem('history'));
+               temArr.push(searchKey);
+               localStorage.setItem('history',JSON.stringify(temArr));
             }
 
         }

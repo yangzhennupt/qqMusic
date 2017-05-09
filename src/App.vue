@@ -49,12 +49,17 @@ export default {
             this.$store.state.isPlay = false;
             this.nextSong();
         },
-        nextSong(){
-            this.$store.commit('changeMusic',++this.$store.state.audio.index);
-            //改变播放状态
-            this.$store.commit('play', true);
-            //播放
-            this.$store.state.dom.play();
+        nextSong() {
+
+            if (this.$store.state.musicList.length > this.$store.state.audio.index) {
+                this.$store.commit('changeMusic', ++this.$store.state.audio.index);
+                //改变播放状态
+                this.$store.commit('play', true);
+                //播放
+                this.$store.state.dom.play();
+            } else {
+                this.$store.commit('play', false);
+            }
 
         }
     }

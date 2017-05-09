@@ -61,8 +61,7 @@ const store = new Vuex.Store({
         getDom(state, dom) {
             state.dom = dom;
         },
-        changeMusic(state,index){
-            //state.audio.name = state.musicList[index].name;
+        changeMusic(state,index){         
             state.audio.src = "http://ws.stream.qqmusic.qq.com/"+state.musicList[index].data.songid+".m4a?fromtag=46";
             state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000"+state.musicList[index].data.albummid+".jpg";
             state.audio.index = index;
