@@ -8,9 +8,10 @@
             <i></i>
             <span class="cancel" v-show="isFocus&&!isSearch"></span>
         </div>
-        <div class="search-history">
+        <div class="search-history" v-show="isFocus&&!isSearch">
+            <h6>搜索历史</h6>
             <ul>
-                <li v-for="item in historyList">{{item}}</li>
+                <li v-for="item in historyList"><i class="historyIcon"></i> {{item}}</li>
             </ul>
         </div>
         <div class="hot-word" v-show="!isFocus&&!isSearch">
@@ -35,14 +36,17 @@
 export default {
     data() {
             return {
+
                 loading: true,
+                //热词对象：标红
                 hotWord: {},
+                //搜索框
                 isFocus: false,
                 hotkey: [],
                 searchKey: '',
                 searchResult: {},
                 isSearch: false,
-                historyList:[]
+                historyList: []
             }
         },
         computed: {
@@ -52,45 +56,71 @@ export default {
             this.$store.commit('changeActiveIndex', 3);
             this.$store.dispatch('getHotWord').then(res => {
                 this.hotWord = res.data.data;
+                //只取前10条热词
                 this.hotkey = res.data.data.hotkey.slice(0, 10);
                 this.loading = false;
             });
-            
+            //如果从没有搜过，则在该设备初始化localStorage
+            if (localStorage.history === undefined) {
+                localStorage.setItem('history', '[]');
+            }
+            this.historyList = JSON.parse(localStorage.history);
         },
+        // watch: {
+        //     historyList: {
+        //         handler(val, oldVal) {
+        //           localStorage.history=JSON.stringify(val);
+        //         },
+        //         deep: true
+        //     }
+        // },
         computed: {
-            historyList() {
-                let hisArr = [];
-                if (localStorage.getItem('history') === null) {
-                    localStorage.setItem('history',"[]");
-                    return hisArr;
-                } else {
-                    hisArr = JSON.parse(localStorage.getItem('history'));
-                    return hisArr;
+
+        },
+        methods: {
+            changStatus() {
+                this.isFocus = !this.isFocus;
+            },
+            doSearch(searchKey) {
+                if (searchKey.trim() != "") {
+                    this.$store.dispatch('getSearchResult', {
+                        keys: searchKey
+                    }).then(res => {
+                        this.searchResult = res.data.data;
+                        console.log(this.searchResult);
+                        this.isSearch = true;
+
+                    });
+
+
+                    let temArr = JSON.parse(localStorage.getItem('history'));
+                    //长度为0直接push，否则进行遍历判断是否存在这个搜索词，如果存在，不Push 仅调整位置
+                    let hasThisKey = false,
+                        index = null;
+                    if (temArr.length == 0) {
+                        temArr.push(searchKey);
+                    } else {
+                        for (let i = temArr.length - 1; i >= 0; i--) {
+                            if (temArr[i] == searchKey) {
+                                hasThisKey = true;
+                                index = i;
+                                return;
+                            }
+                        }
+                    }
+                    //已经存在该搜索词，前置
+                    if (hasThisKey == true) {
+                        temArr = temArr.splice(index, 1);
+                        temArr.unshift(searchKey);
+                    } else {
+                        temArr.unshift(searchKey);
+                    }
+                    //重新写入localStorage
+                    localStorage.setItem('history', JSON.stringify(temArr));
                 }
-            }
-        },
-    methods: {
-        changStatus() {
-            this.isFocus = !this.isFocus;
-        },
-        doSearch(searchKey) {
-            if (searchKey.trim() != "") {
-                this.$store.dispatch('getSearchResult', {
-                    keys: searchKey
-                }).then(res => {
-                    this.searchResult = res.data.data;
-                    console.log(this.searchResult);
-                    this.isSearch = true;
 
-                });
-                //存localStorage
-               let temArr=JSON.parse(localStorage.getItem('history'));
-               temArr.push(searchKey);
-               localStorage.setItem('history',JSON.stringify(temArr));
             }
-
         }
-    }
 }
 </script>
 <style scoped lang="scss">
@@ -164,6 +194,33 @@ export default {
                     color: #fc4524;
                     border-color: #fc4524;
                 }
+            }
+        }
+    }
+}
+.search-history{
+    h6{
+        margin: 0 auto;
+        font-size: 14px;
+        font-weight: normal;
+        color: #bdbdbd;
+        margin-top: 10px;
+    }
+    >ul{
+        list-style: none;
+        padding-left: 0;
+        >li{
+            display: flex;
+            border-bottom: 1px solid #ccc;
+            height: 30px;
+            line-height: 30px;
+            .historyIcon{
+                background: url(../assets/history.svg) no-repeat;
+                background-size: contain;
+                height: 16px;
+                width: 16px;
+                display: inline-block;
+                margin:7px 10px 0 20px;
             }
         }
     }
