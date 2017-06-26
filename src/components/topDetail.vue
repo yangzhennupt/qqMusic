@@ -9,7 +9,7 @@
                 <div class="top-info" :style="{background:mask}">
                     <h6>{{topName}}</h6>
                     <p class="updateTime">{{date}} 更新</p>
-                    <button @click="playAll()" class="playAll">播放全部</button>
+                    <button @click="playAll()" class="playAll"></button>
                 </div>
             </div>
         </div>
@@ -117,12 +117,12 @@ export default {
             //获取当前播放列表的长度
             let musicLen=this.$store.state.musicList.length;
            // let index=++this.$store.state.audio.index;
-             let index=musicLen;
+           //  let index=musicLen;
           
              //添加歌单数组到播放列表
             this.$store.state.musicList=this.$store.state.musicList.concat(this.songList);
               //改变audio当前src
-            this.$store.commit('changeMusic',index);
+            this.$store.commit('changeMusic',musicLen);
             //改变播放状态
             this.$store.commit('play', true);
             //播放
@@ -190,6 +190,18 @@ export default {
                         padding-bottom: 20px;
                         border-bottom: 1px solid rgba(187, 187, 187, .5);
                     }
+                }
+                .playAll{
+                    position: absolute;
+                    right: 20px;
+                    top: 28px;
+                    background: url(../assets/playAll.svg) no-repeat;
+                    background-size: contain;
+                    display: block;
+                    height: 50px;
+                    width: 50px;
+                    border: none;
+                    text-decoration: none; 
                 }
             }
         }
