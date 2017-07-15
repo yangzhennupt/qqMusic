@@ -42,7 +42,7 @@
                          <li v-for="album in searchResult.album.itemlist" >
                              <div class="ambum-wrap">
                                  <div class="img-container">
-                                     <img  :src="album.pic" :alt="专辑图片">
+                                     <img  :src="album.pic">
                                  </div>
                                  <div class="info-container">
                                      <p class="album-name">{{album.name}}</p>
@@ -215,6 +215,7 @@ export default {
                 word-break: keep-all;
                 margin-bottom: 10px;
                 margin-right: 14px;
+                cursor: pointer;
                 &.special {
                     color: #fc4524;
                     border-color: #fc4524;

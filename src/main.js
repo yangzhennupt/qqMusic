@@ -57,6 +57,8 @@ const store = new Vuex.Store({
         },
         play(state, flag) {
             state.isPlay = flag;
+            console.log(state.musicList);
+           
         },
         getDom(state, dom) {
             state.dom = dom;
