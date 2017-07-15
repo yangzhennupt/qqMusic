@@ -28,6 +28,30 @@
                 抱歉，没有结果...
             </div>
             <div class="hasResult">
+                 <div class="result-list" v-if="searchResult.song">
+                     <h3>单曲</h3>
+                     <ul>
+                         <li v-for="item in searchResult.song.itemlist" >
+                             <p>{{item.name}}  {{item.singer}}</p>
+                         </li>
+                     </ul>          
+                 </div>
+                 <div class="result-list" v-if="searchResult.album">
+                     <h3>专辑</h3>
+                     <ul>
+                         <li v-for="album in searchResult.album.itemlist" >
+                             <div class="ambum-wrap">
+                                 <div class="img-container">
+                                     <img  :src="album.pic" :alt="专辑图片">
+                                 </div>
+                                 <div class="info-container">
+                                     <p class="album-name">{{album.name}}</p>
+                                     <p class="album-songer">{{album.singer}}</p>
+                                 </div>
+                             </div>
+                         </li>
+                     </ul>          
+                 </div>
             </div>
         </div>
     </div>
@@ -89,6 +113,7 @@ export default {
                         this.searchResult = res.data.data;
                         console.log(this.searchResult);
                         this.isSearch = true;
+
 
                     });
 
