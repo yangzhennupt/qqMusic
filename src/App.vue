@@ -51,7 +51,7 @@ export default {
         },
         nextSong() {
 
-            if (this.$store.state.musicList.length > this.$store.state.audio.index) {
+            if (this.$store.state.musicList.length > this.$store.state.audio.index+1) {
                 this.$store.commit('changeMusic', ++this.$store.state.audio.index);
                 //改变播放状态
                 this.$store.commit('play', true);

@@ -2,7 +2,7 @@
     <div class="footer">
         <div class="miniPlay" v-if="isShowminiPlay">
             <div class="music-img">
-                <img :src="imgurl || defaultImg" alt="">
+                <img :src="imgurl || defaultImg" alt="" @error="changeSrc()">
             </div>
             <div class="music-info">
             </div>
@@ -43,6 +43,9 @@ export default {
                 this.isPlay ? this.getDom.play() : this.getDom.pause();
             }
 
+        },
+        changeSrc(){
+            this.$store.state.audio.imgurl=this.defaultImg;
         }
     }
 }

@@ -31,9 +31,9 @@ const store = new Vuex.Store({
             imgurl: "",
             time: "",
             name: "",
-            index:-1
+            index: -1
         },
-        musicList:[],
+        musicList: [],
         isPlay: false,
         dom: {},
         topList: [],
@@ -58,14 +58,19 @@ const store = new Vuex.Store({
         play(state, flag) {
             state.isPlay = flag;
             console.log(state.musicList);
-           
+
         },
         getDom(state, dom) {
             state.dom = dom;
         },
-        changeMusic(state,index){         
-            state.audio.src = "http://ws.stream.qqmusic.qq.com/"+state.musicList[index].data.songid+".m4a?fromtag=46";
-            state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000"+state.musicList[index].data.albummid+".jpg";
+        changeMusic(state, index) {
+            if (state.musicList[index].data) {
+                state.audio.src = "http://ws.stream.qqmusic.qq.com/" + state.musicList[index].data.songid + ".m4a?fromtag=46";
+                state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000" + state.musicList[index].data.albummid + ".jpg";
+            } else {
+                state.audio.src = "http://ws.stream.qqmusic.qq.com/" + state.musicList[index].id + ".m4a?fromtag=46";
+                state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000" + ".jpg";
+            }
             state.audio.index = index;
         }
     },
@@ -154,53 +159,53 @@ const store = new Vuex.Store({
                         needNewCode: 0
                     },
                     jsonp: 'jsonpCallback'
-                }).then(res=>{
+                }).then(res => {
                     resolve(res);
                 })
             })
         },
-        getHotWord(){
-            return new Promise((resolve,reject)=>{
-                Vue.http.jsonp('https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg',{
-                    params:{
+        getHotWord() {
+            return new Promise((resolve, reject) => {
+                Vue.http.jsonp('https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg', {
+                    params: {
 
-                    g_tk:911075056,
-                    uin:550994952,
-                    format:'jsonp',
-                    inCharset:'utf-8',
-                    outCharset:'utf-8',
-                    notice:0,
-                    platform:'h5',
-                    needNewCode:1,
-                    _:new Date().getTime()
+                        g_tk: 911075056,
+                        uin: 550994952,
+                        format: 'jsonp',
+                        inCharset: 'utf-8',
+                        outCharset: 'utf-8',
+                        notice: 0,
+                        platform: 'h5',
+                        needNewCode: 1,
+                        _: new Date().getTime()
                     },
-                    jsonp:'jsonpCallback'
-                }).then(res=>{
+                    jsonp: 'jsonpCallback'
+                }).then(res => {
                     resolve(res);
                 })
             })
         },
-        getSearchResult(state,{keys}){
-          return new Promise((resolve,reject)=>{
-            Vue.http.jsonp('https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg',{
-                params:{
-                    is_xml:0,
-                    format:'jsonp',
-                    key:keys,
-                    g_tk:5381,
-                    loginUin:0,
-                    hostUin:0,
-                    inCharset:'utf8',
-                    outCharset:'utf-8',
-                    notice:0,
-                    platform:'yqq',
-                    needNewCode:0
-                },
-                jsonp:'jsonpCallback'
-            }).then(res=>{
-                resolve(res);
+        getSearchResult(state, { keys }) {
+            return new Promise((resolve, reject) => {
+                Vue.http.jsonp('https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg', {
+                    params: {
+                        is_xml: 0,
+                        format: 'jsonp',
+                        key: keys,
+                        g_tk: 5381,
+                        loginUin: 0,
+                        hostUin: 0,
+                        inCharset: 'utf8',
+                        outCharset: 'utf-8',
+                        notice: 0,
+                        platform: 'yqq',
+                        needNewCode: 0
+                    },
+                    jsonp: 'jsonpCallback'
+                }).then(res => {
+                    resolve(res);
+                })
             })
-          })
         }
     }
 });

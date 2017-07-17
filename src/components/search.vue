@@ -4,22 +4,22 @@
             <img src="../assets/loading/ball-triangle.svg" alt="">
         </div>
         <div class="search-input">
-            <input v-model="searchKey" type="text" placeholder="搜索歌曲、歌单、专辑" @focus="changStatus" @blur="changStatus" @keyup.enter="doSearch(searchKey)">
+            <input v-model="searchKey" type="text" placeholder="搜索歌曲、歌单、专辑" @focus="changStatus" @keyup.enter="doSearch(searchKey)">
             <i></i>
             <span class="cancel" v-show="isFocus&&!isSearch"></span>
         </div>
         <div class="search-history" v-show="isFocus&&!isSearch">
             <h6>搜索历史</h6>
             <ul>
-                <li v-for="item in historyList"><i class="historyIcon"></i> {{item}}</li>
+                <li v-for="item in historyList" @click="doSearch(item)"><i class="historyIcon"></i>{{item}}</li>
             </ul>
         </div>
         <div class="hot-word" v-show="!isFocus&&!isSearch">
             <div class="word-warp">
                 <h6 v-show="!loading">热门搜索</h6>
                 <div class="label-content">
-                    <span class="special">{{hotWord.special_key}}</span>
-                    <span v-for="item in hotkey">{{item.k}}</span>
+                    <span class="special" @click="doSearch(hotWord.special_key)">{{hotWord.special_key}}</span>
+                    <span v-for="item in hotkey" @click="doSearch(item.k)">{{item.k}}</span>
                 </div>
             </div>
         </div>
@@ -28,30 +28,30 @@
                 抱歉，没有结果...
             </div>
             <div class="hasResult">
-                 <div class="result-list" v-if="searchResult.song">
-                     <h3>单曲</h3>
-                     <ul>
-                         <li v-for="item in searchResult.song.itemlist" >
-                             <p>{{item.name}}  {{item.singer}}</p>
-                         </li>
-                     </ul>          
-                 </div>
-                 <div class="result-list" v-if="searchResult.album">
-                     <h3>专辑</h3>
-                     <ul>
-                         <li v-for="album in searchResult.album.itemlist" >
-                             <div class="ambum-wrap">
-                                 <div class="img-container">
-                                     <img  :src="album.pic">
-                                 </div>
-                                 <div class="info-container">
-                                     <p class="album-name">{{album.name}}</p>
-                                     <p class="album-songer">{{album.singer}}</p>
-                                 </div>
-                             </div>
-                         </li>
-                     </ul>          
-                 </div>
+                <div class="result-list song-type" v-if="searchResult.song">
+                    <h3>单曲</h3>
+                    <ul>
+                        <li v-for="item in searchResult.song.itemlist" @click="chooseSong(item)">
+                            <p>{{item.name}}  -{{item.singer}}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="result-list album-type" v-if="searchResult.album">
+                    <h3>专辑</h3>
+                    <ul>
+                        <li v-for="album in searchResult.album.itemlist">
+                            <div class="ambum-wrap">
+                                <div class="img-container">
+                                    <img :src="album.pic">
+                                </div>
+                                <div class="info-container">
+                                    <p class="album-name">{{album.name}}  -</p>
+                                    <p class="album-songer">{{album.singer}}</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -113,37 +113,55 @@ export default {
                         this.searchResult = res.data.data;
                         console.log(this.searchResult);
                         this.isSearch = true;
-
-
                     });
+                    this.dealStorage(searchKey);
+                    this.searchKey = searchKey;
 
-
-                    let temArr = JSON.parse(localStorage.getItem('history'));
-                    //长度为0直接push，否则进行遍历判断是否存在这个搜索词，如果存在，不Push 仅调整位置
-                    let hasThisKey = false,
-                        index = null;
-                    if (temArr.length == 0) {
-                        temArr.push(searchKey);
-                    } else {
-                        for (let i = temArr.length - 1; i >= 0; i--) {
-                            if (temArr[i] == searchKey) {
-                                hasThisKey = true;
-                                index = i;
-                                return;
-                            }
+                }
+            },
+            //处理历史记录函数
+            dealStorage(searchKey) {
+                let temArr = JSON.parse(localStorage.getItem('history'));
+                //长度为0直接push，否则进行遍历判断是否存在这个搜索词，如果存在，不Push 仅调整位置
+                let hasThisKey = false,
+                    index = null;
+                if (temArr.length == 0) {
+                    temArr.push(searchKey);
+                } else {
+                    for (let i = temArr.length - 1; i >= 0; i--) {
+                        if (temArr[i] == searchKey) {
+                            hasThisKey = true;
+                            index = i;
+                            return;
                         }
                     }
-                    //已经存在该搜索词，前置
-                    if (hasThisKey == true) {
-                        temArr = temArr.splice(index, 1);
-                        temArr.unshift(searchKey);
-                    } else {
-                        temArr.unshift(searchKey);
-                    }
-                    //重新写入localStorage
-                    localStorage.setItem('history', JSON.stringify(temArr));
                 }
+                //已经存在该搜索词，前置
+                if (hasThisKey == true) {
+                    temArr = temArr.splice(index, 1);
+                    temArr.unshift(searchKey);
+                } else {
+                    temArr.unshift(searchKey);
+                }
+                //重新写入localStorage
+                localStorage.setItem('history', JSON.stringify(temArr));
+            },
+            chooseSong(item){
+                this.$store.commit('changAudio', {
+                    "songid": item.id,
+                    "albummid": item.mid
+                });
+                //获取当前的index;
+                let curIndex=this.$store.state.audio.index;
+                //在当前index位置插入一个数组元素;
+                this.$store.state.musicList.splice(++curIndex,0,item);
 
+                this.$store.commit('changeMusic',curIndex);
+                 
+                //改变播放状态
+                this.$store.commit('play', true);
+                //播放
+                this.$store.state.dom.play();
             }
         }
 }
@@ -224,29 +242,91 @@ export default {
         }
     }
 }
-.search-history{
-    h6{
+
+.search-history {
+    h6 {
         margin: 0 auto;
         font-size: 14px;
         font-weight: normal;
         color: #bdbdbd;
         margin-top: 10px;
     }
-    >ul{
+    >ul {
         list-style: none;
         padding-left: 0;
-        >li{
+        >li {
             display: flex;
             border-bottom: 1px solid #ccc;
             height: 30px;
             line-height: 30px;
-            .historyIcon{
+            .historyIcon {
                 background: url(../assets/history.svg) no-repeat;
                 background-size: contain;
                 height: 16px;
                 width: 16px;
                 display: inline-block;
-                margin:7px 10px 0 20px;
+                margin: 7px 10px 0 20px;
+            }
+        }
+    }
+}
+
+.hasResult {
+
+        h3 {
+            padding-left: 20px;
+            text-align: left;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+ 
+}
+
+.song-type{
+    li {
+        p {
+            margin: 0;
+            padding-left: 10px;
+        }
+        height: 40px;
+        line-height: 40px;
+        margin: 0 40px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+    }
+}
+
+.album-type{
+    li {
+        p {
+            margin: 0;
+            padding-left: 10px;
+        }
+        height: 58px;
+        line-height: 58px;
+        margin: 0 40px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+        .ambum-wrap {
+            .img-container {
+                height: 58px;
+                width: 58px;
+                float: left;
+                line-height: 90px;
+                img {
+                    height: 40px;
+                    width: 40px;
+                }
+            }
+            .info-container {
+                .album-name {
+                    float: left;
+                }
             }
         }
     }

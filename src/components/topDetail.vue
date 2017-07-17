@@ -54,7 +54,7 @@ export default {
                     return
                 }
             });
-            this.$store.state.playList = this.songList;
+           // this.$store.state.playList = this.songList;
             this.topListData = res.data;
             this.topName = res.data.topinfo.ListName;
             this.date = res.data.date;
