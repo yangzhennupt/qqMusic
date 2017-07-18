@@ -199,6 +199,28 @@ const store = new Vuex.Store({
                     resolve(res);
                 })
             })
+        },
+        getAlbumInfo(state,{id}){
+            return new Promise((resolve,reject)=>{
+                Vue.http.jsonp('https://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg',{
+                    params:{
+                        albummid:id,
+                        g_tk:5381,
+                        loginUin:0,
+                        hostUin:0,
+                        format:'jsonp',
+                        inCharset:'utf8',
+                        outCharset:'utf-8',
+                        notice:0,
+                        platform:'yqq',
+                        needNewCode:0,
+                        _: new Date().getTime()
+                    },
+                        jsonpCallback:'jsonpCallback'
+                }).then(res=>{
+                    resolve(res);
+                })
+            })
         }
     }
 });
