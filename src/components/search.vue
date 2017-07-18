@@ -259,6 +259,7 @@ export default {
             border-bottom: 1px solid #ccc;
             height: 30px;
             line-height: 30px;
+            font-size: 14px;
             .historyIcon {
                 background: url(../assets/history.svg) no-repeat;
                 background-size: contain;
@@ -289,6 +290,7 @@ export default {
 
 .song-type{
     li {
+        font-size: 14px;
         p {
             margin: 0;
             padding-left: 10px;
@@ -303,6 +305,7 @@ export default {
 
 .album-type{
     li {
+        font-size: 14px;
         p {
             margin: 0;
             padding-left: 10px;

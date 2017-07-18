@@ -42,7 +42,9 @@ export default {
         toTopDetail(topId) {
             this.$store.state.topId = topId;
             this.$router.push({
-                path: '/topDetail'
+                name:'topDetail',
+                path: '/topDetail',
+                params:{id:topId}
             });
         }
     }
@@ -62,15 +64,18 @@ export default {
         >li {
             background: #fff;
             margin: 10px;
+            border-radius: 5px;
             .topItem {
                 display: flex;
                 .imgInfo {
                     width: 100px;
                     height: 100px;
                     position: relative;
+                    border-radius: 5px;
                     img {
                         height: 100%;
                         width: 100%;
+                        border-radius: 5px 0 0 5px;
                     }
                     span {
                         position: absolute;

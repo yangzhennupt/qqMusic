@@ -21,7 +21,23 @@ export default {
     },
     computed: {
         activeIndex() {
-            return this.$store.state.activeIndex
+            let activeIndex,routeName=this.$route.name;
+
+            if(routeName=="Hello"){
+                  activeIndex=1;
+                
+               
+             }else if(routeName=="topList"||routeName=="topDetail"){
+                activeIndex=2;
+            
+               
+             }else if(routeName=="search"){
+                activeIndex=3;
+               
+               
+             }
+               return activeIndex;
+           
         }
     }
 }

@@ -33,7 +33,7 @@ export default {
     name: 'topDetail',
     data() {
         return {
-            ids: 0,
+            ids: this.$route.params.id,
             songList: [],
             loading: true,
             detailImg: '',
@@ -43,7 +43,7 @@ export default {
         }
     },
     created() {
-        this.ids = this.$store.state.topId;
+       // this.ids = this.$store.state.topId;
         this.$store.dispatch('getListDetail', {
             id: this.ids
         }).then(res => {

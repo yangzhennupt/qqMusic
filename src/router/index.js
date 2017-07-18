@@ -21,7 +21,7 @@ export default new Router({
     	component:topList
     },
       {
-      path:'/topDetail',
+      path:'/topDetail/:id',
       name:'topDetail',
       component:topDetail
     },

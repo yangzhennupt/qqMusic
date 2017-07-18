@@ -50,10 +50,7 @@ export default {
         }
     },
     created() {
-        // this.$store.dispatch('getData').then(res => {
-        //     this.swiperSlides = res.data.data.slider;
-        //     this.loading = false;
-        // });
+    
         this.$store.dispatch('getHotList').then(res => {
             this.swiperSlides = res.data.data.focus;
             this.hotdiss = res.data.data.hotdiss.list;

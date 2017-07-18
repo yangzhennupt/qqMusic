@@ -20,12 +20,7 @@ Vue.use(vueResource);
 
 const store = new Vuex.Store({
     state: {
-        sliderList: [],
-        radioList: [],
-        activeIndex: 0,
-        songData: null,
         isShowminiPlay: true,
-        topId: 0,
         audio: {
             src: "",
             imgurl: "",
@@ -35,9 +30,7 @@ const store = new Vuex.Store({
         },
         musicList: [],
         isPlay: false,
-        dom: {},
-        topList: [],
-        color: null
+        dom: {}
 
     },
     mutations: {
