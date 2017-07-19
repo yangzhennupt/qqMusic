@@ -1,7 +1,7 @@
 <template>
     <div class="qHeader">
         <div class="logo"></div>
-        <div class="download" @click="toGit">Github</div>
+        <div class="download" @click="toGit">{{message}}</div>
     </div>
 </template>
 <script>
@@ -12,6 +12,7 @@ export default {
             msg: 'dddddd3123122223123123'
         }
     },
+    props:['message'],
     methods:{
         toGit(){
             window.open('https://github.com/yangzhennupt/qqMusic');

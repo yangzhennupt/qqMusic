@@ -1,15 +1,15 @@
 <template>
     <div id="app">
         <!-- 头部logo -->
-        <qHeader></qHeader>
+        <qHeader  :message="msg" v-show="!fullScreen"></qHeader>
         <!-- 导航 -->
-        <qNav></qNav>
+        <qNav v-show="!fullScreen"></qNav>
         <!-- 路由控制区域 -->
         <div class="mainContent">
             <router-view></router-view>
         </div>
         <!-- 底部mini播放器 -->
-        <qFooter></qFooter>
+        <qFooter v-show="!fullScreen"></qFooter>
         <audio :src="audio.src||defaultSrc" ref="audio" :autoplay="isPlay" @ended="hasEnd"></audio>
     </div>
 </template>
@@ -21,7 +21,8 @@ export default {
     name: 'app',
     data() {
         return {
-            defaultSrc: ""
+            defaultSrc: "",
+            msg:'Github'
         }
     },
     components: {
@@ -34,6 +35,9 @@ export default {
 
     },
     computed: {
+        fullScreen(){
+            return this.$store.state.fullScreen;
+        },
         audio() {
             return this.$store.state.audio;
         },

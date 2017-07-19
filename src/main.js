@@ -21,6 +21,7 @@ Vue.use(vueResource);
 const store = new Vuex.Store({
     state: {
         isShowminiPlay: true,
+        fullScreen:false,
         audio: {
             src: "",
             imgurl: "",
