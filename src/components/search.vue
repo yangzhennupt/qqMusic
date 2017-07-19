@@ -3,18 +3,19 @@
         <div class="loading" v-show="loading">
             <img src="../assets/loading/ball-triangle.svg" alt="">
         </div>
-        <div class="search-input">
+        <div class="search-input" :class="{showlist:isFocus}">
             <input v-model="searchKey" type="text" placeholder="搜索歌曲、歌单、专辑" @focus="changStatus" @keyup.enter="doSearch(searchKey)">
             <i></i>
-            <span class="cancel" v-show="isFocus&&!isSearch"></span>
+            <span class="cancel" v-show="isFocus" @click="cancle">取消</span>
         </div>
-        <div class="search-history" v-show="isFocus&&!isSearch">
+        <div class="search-history" v-show="isFocus&&!isSearched">
             <h6>搜索历史</h6>
             <ul>
                 <li v-for="item in historyList" @click="doSearch(item)"><i class="historyIcon"></i>{{item}}</li>
+                <li v-if="historyList.length" class="clearHistory" @click="clearStorage">清除搜索记录</li>    
             </ul>
         </div>
-        <div class="hot-word" v-show="!isFocus&&!isSearch">
+        <div class="hot-word" v-show="!isFocus&&!isSearched">
             <div class="word-warp">
                 <h6 v-show="!loading">热门搜索</h6>
                 <div class="label-content">
@@ -23,16 +24,16 @@
                 </div>
             </div>
         </div>
-        <div class="search-list" v-show="isSearch">
+        <div class="search-list" v-show="isSearched">
             <div class="noResut" v-show="!searchResult.song">
                 抱歉，没有结果...
             </div>
-            <div class="hasResult">
+            <div class="hasResult" >
                 <div class="result-list song-type" v-if="searchResult.song">
                     <h3>单曲</h3>
                     <ul>
                         <li v-for="item in searchResult.song.itemlist" @click="chooseSong(item)">
-                            <p>{{item.name}}  -{{item.singer}}</p>
+                            <p>{{item.name}} -{{item.singer}}</p>
                         </li>
                     </ul>
                 </div>
@@ -45,7 +46,7 @@
                                     <img :src="album.pic">
                                 </div>
                                 <div class="info-container">
-                                    <p class="album-name">{{album.name}}  -</p>
+                                    <p class="album-name">{{album.name}} -</p>
                                     <p class="album-songer">{{album.singer}}</p>
                                 </div>
                             </div>
@@ -69,7 +70,7 @@ export default {
                 hotkey: [],
                 searchKey: '',
                 searchResult: {},
-                isSearch: false,
+                isSearched: false,
                 historyList: []
             }
         },
@@ -105,6 +106,16 @@ export default {
             changStatus() {
                 this.isFocus = !this.isFocus;
             },
+            cancle(){
+                 this.isFocus = !this.isFocus;
+                 this.isSearched=false;
+                 this.searchKey='';
+            },
+            clearStorage(){
+                localStorage.clear();
+                localStorage.setItem('history', '[]');
+                this.historyList=[];
+            },
             doSearch(searchKey) {
                 if (searchKey.trim() != "") {
                     this.$store.dispatch('getSearchResult', {
@@ -112,7 +123,7 @@ export default {
                     }).then(res => {
                         this.searchResult = res.data.data;
                         console.log(this.searchResult);
-                        this.isSearch = true;
+                        this.isSearched = true;
                     });
                     this.dealStorage(searchKey);
                     this.searchKey = searchKey;
@@ -126,7 +137,7 @@ export default {
                 let hasThisKey = false,
                     index = null;
                 if (temArr.length == 0) {
-                    temArr.push(searchKey);
+                  //  temArr.push(searchKey);
                 } else {
                     for (let i = temArr.length - 1; i >= 0; i--) {
                         if (temArr[i] == searchKey) {
@@ -136,6 +147,7 @@ export default {
                         }
                     }
                 }
+
                 //已经存在该搜索词，前置
                 if (hasThisKey == true) {
                     temArr = temArr.splice(index, 1);
@@ -143,21 +155,24 @@ export default {
                 } else {
                     temArr.unshift(searchKey);
                 }
+                //限制最多存十条历史记录
+                 temArr=temArr.splice(0,10);
                 //重新写入localStorage
                 localStorage.setItem('history', JSON.stringify(temArr));
+                this.historyList = JSON.parse(localStorage.history);
             },
-            chooseSong(item){
+            chooseSong(item) {
                 this.$store.commit('changAudio', {
                     "songid": item.id,
                     "albummid": item.mid
                 });
                 //获取当前的index;
-                let curIndex=this.$store.state.audio.index;
+                let curIndex = this.$store.state.audio.index;
                 //在当前index位置插入一个数组元素;
-                this.$store.state.musicList.splice(++curIndex,0,item);
+                this.$store.state.musicList.splice(++curIndex, 0, item);
 
-                this.$store.commit('changeMusic',curIndex);
-                 
+                this.$store.commit('changeMusic', curIndex);
+
                 //改变播放状态
                 this.$store.commit('play', true);
                 //播放
@@ -177,11 +192,16 @@ export default {
         background: #f4f4f4;
         padding: 20px;
         position: relative;
+        transition: all 0.3s linear;
+        &.showlist {
+            padding-right: 30px;
+        }
         input {
             height: 25px;
             line-height: 25px;
             flex: 1;
-            color: rgba(0, 0, 0, .3);
+           // color: rgba(0, 0, 0, .3);
+           color: #333;
             border: none;
             padding-left: 40px;
             font-size: 14px;
@@ -199,14 +219,15 @@ export default {
             background-size: contain;
         }
         .cancel {
+
             display: inline-block;
-            height: 20px;
-            width: 20px;
-            background: url(../assets/cancel.svg) no-repeat;
-            right: 30px;
-            top: 24px;
-            background-size: contain;
-            position: absolute;
+            height: 27px;
+            width: 30px;
+            color: #333;
+            font-size: 14px;
+            transition: all 0.3s linear;
+            line-height: 27px;
+            margin-left: 10px;
         }
     }
     .word-warp {
@@ -242,7 +263,11 @@ export default {
         }
     }
 }
-
+.clearHistory{
+    color: #47c88a;
+    justify-content: center;
+    cursor: pointer;
+}
 .search-history {
     h6 {
         margin: 0 auto;
@@ -256,9 +281,9 @@ export default {
         padding-left: 0;
         >li {
             display: flex;
-            border-bottom: 1px solid #ccc;
-            height: 30px;
-            line-height: 30px;
+            border-top: 1px solid #e4e4e4;
+            height: 40px;
+            line-height: 40px;
             font-size: 14px;
             .historyIcon {
                 background: url(../assets/history.svg) no-repeat;
@@ -266,29 +291,30 @@ export default {
                 height: 16px;
                 width: 16px;
                 display: inline-block;
-                margin: 7px 10px 0 20px;
+                margin: 12px 10px 0 20px;
+            }
+            &:first-child{
+                border-top: none;
             }
         }
     }
 }
 
 .hasResult {
-
-        h3 {
-            padding-left: 20px;
-            text-align: left;
-            color: #333;
-            font-weight: bold;
-            font-size: 16px;
-        }
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
- 
+    h3 {
+        padding-left: 20px;
+        text-align: left;
+        color: #333;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
 }
 
-.song-type{
+.song-type {
     li {
         font-size: 14px;
         p {
@@ -303,7 +329,7 @@ export default {
     }
 }
 
-.album-type{
+.album-type {
     li {
         font-size: 14px;
         p {

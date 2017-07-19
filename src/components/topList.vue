@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         toTopDetail(topId) {
-            this.$store.state.topId = topId;
+           // this.$store.state.topId = topId;
             this.$router.push({
                 name:'topDetail',
                 path: '/topDetail',

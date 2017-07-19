@@ -59,6 +59,15 @@ export default {
     },
     mounted() {
         this.$store.commit('changeActiveIndex', 1);
+    },
+    methods:{
+        enterHot(hotId){
+            this.$router.push({
+                name:'hotList',
+                path: '/hotList',
+                params:{id:hotId}
+            });
+        }
     }
 }
 </script>

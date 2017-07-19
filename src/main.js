@@ -26,6 +26,7 @@ const store = new Vuex.Store({
             imgurl: "",
             time: "",
             name: "",
+            singer:"",
             index: -1
         },
         musicList: [],
@@ -60,9 +61,17 @@ const store = new Vuex.Store({
             if (state.musicList[index].data) {
                 state.audio.src = "http://ws.stream.qqmusic.qq.com/" + state.musicList[index].data.songid + ".m4a?fromtag=46";
                 state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000" + state.musicList[index].data.albummid + ".jpg";
+                let singerList=[];
+                state.musicList[index].data.singer.forEach(function(v,i){
+                    singerList.push(v.name);
+                })
+                state.audio.singer=singerList.join('/');
+                state.audio.name=state.musicList[index].data.songname;
             } else {
                 state.audio.src = "http://ws.stream.qqmusic.qq.com/" + state.musicList[index].id + ".m4a?fromtag=46";
                 state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000" + ".jpg";
+                state.audio.singer=state.musicList[index].singer;
+                state.audio.name=state.musicList[index].name;
             }
             state.audio.index = index;
         }
@@ -217,6 +226,35 @@ const store = new Vuex.Store({
                         _: new Date().getTime()
                     },
                         jsonpCallback:'jsonpCallback'
+                }).then(res=>{
+                    resolve(res);
+                })
+            })
+        },
+        getHotDetail(state,{id}){
+            return new Promise((resolve,reject)=>{
+                Vue.http.jsonp('https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg',{
+                    params:{
+                        g_tk:5381,
+                        uin:0,
+                        format:'jsonp',
+                        inCharset:'utf-8',
+                        outCharset:'utf-8',
+                        notice:0,
+                        platform:'h5',
+                        needNewCode:1,
+                        new_format:1,
+                        pic:500,
+                        disstid:id,
+                        type:1,
+                        json:1,
+                        utf8:1,
+                        onlysong:0,
+                        nosign:1,
+                        _: new Date().getTime()
+                       
+                    },
+                    jsonpCallback:'jsonpCallback'
                 }).then(res=>{
                     resolve(res);
                 })

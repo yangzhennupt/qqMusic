@@ -1,10 +1,13 @@
 <template>
     <div class="footer">
         <div class="miniPlay" v-if="isShowminiPlay">
-            <div class="music-img">
-                <img :src="imgurl || defaultImg" alt="" @error="changeSrc()">
+            <div class="music-img" :class="{hasAnimate:isPlay}">
+                <img :src="songInfo.imgurl || defaultImg" alt="songInfo.name" @error="changeSrc()">
             </div>
             <div class="music-info">
+                <div class="audio-info">
+                    <p>{{songInfo.name}}{{songInfo.name?'-':''}}{{songInfo.singer}}</p>
+                </div>
             </div>
             <div class="music-option">
                 <i :class="[isPlay?playIcon:pauseIcon]" @click="play()"></i>
@@ -23,6 +26,7 @@ export default {
         }
     },
     computed: {
+       
         isShowminiPlay() {
             return this.$store.state.isShowminiPlay
         },
@@ -32,8 +36,8 @@ export default {
         getDom() {
             return this.$store.state.dom;
         },
-        imgurl() {
-            return this.$store.state.audio.imgurl;
+        songInfo() {
+            return this.$store.state.audio;
         }
     },
     methods: {
@@ -73,7 +77,17 @@ export default {
     display: inline-block;
     background-size: contain;
 }
-
+.hasAnimate{
+   animation: rounds 10s linear 0s infinite normal;
+}
+@keyframes rounds {
+    0%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(360deg);
+    }
+}
 .miniPlay {
     display: flex;
     justify-content: space-between;
@@ -82,8 +96,8 @@ export default {
     align-items: center;
     padding-left: 10px;
     .music-img {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         img {
             border-radius: 50%;
             width: 100%;
@@ -92,6 +106,13 @@ export default {
     }
     .music-info {
         flex: 5;
+        display: flex;
+        p{
+            height: 20px;
+            line-height: 20px;
+            color: #fff;
+            margin-left: 10px;
+        }
     }
     .music-option {
         flex: 1;
