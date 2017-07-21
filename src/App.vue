@@ -6,7 +6,9 @@
         <qNav v-show="!fullScreen"></qNav>
         <!-- 路由控制区域 -->
         <div class="mainContent">
+           
             <router-view></router-view>
+            
         </div>
         <!-- 底部mini播放器 -->
         <qFooter v-show="!fullScreen"></qFooter>
