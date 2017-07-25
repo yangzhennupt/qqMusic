@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="search-list" v-show="isSearched">
-            <div class="noResut" v-show="!searchResult.song">
+            <div class="noResut" v-if="!searchResult.song&&!searchResult.album">
                 抱歉，没有结果...
             </div>
             <div class="hasResult" >
