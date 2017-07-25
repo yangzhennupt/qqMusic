@@ -32,8 +32,9 @@ export default {
         qNav,
         qFooter
     },
-    mounted() {
+    created() {
         this.$store.commit('getDom', this.$refs.audio);
+        this.$store.commit('changeFullScreen',false);
 
     },
     computed: {
@@ -79,7 +80,7 @@ export default {
 }
 
 .mainContent {
-    position: relative;
+  
     flex: 20;
     overflow: auto;
 }

@@ -48,6 +48,9 @@ const store = new Vuex.Store({
         changShowminiPlay(state, flag) {
             state.isShowminiPlay = flag;
         },
+        changeFullScreen(state,flag){
+            state.fullScreen=flag;
+        },
         changAudio(state, obj) {
             state.audio.src = "http://ws.stream.qqmusic.qq.com/" + obj.songid + ".m4a?fromtag=46";
             state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000" + obj.albummid + ".jpg"

@@ -10,7 +10,7 @@
         <h5 v-show="!loading">热门歌单</h5>
         <div class="hotdissWarp">
             <ul>
-                <li v-for="item in hotdiss" :key="item.dissid">
+                <li v-for="item in hotdiss" :key="item.dissid" @click="enterHot(item.dissid)">
                     <div class="hotImg">
                         <img :src="item.imgurl" :alt="item.dissname">
                     </div>
