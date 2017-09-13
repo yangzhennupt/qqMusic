@@ -87,6 +87,7 @@ export default {
             width:100%;
             height:300px;
             float: left;
+            border:none;
         }
         p{
             margin: 0;
