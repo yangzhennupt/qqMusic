@@ -12,7 +12,7 @@
         </div>
         <!-- 底部mini播放器 -->
         <qFooter v-show="!fullScreen"></qFooter>
-        <audio :src="audio.src||defaultSrc" ref="audio" :autoplay="isPlay" @ended="hasEnd"></audio>
+        <audio :src="audio.src||defaultSrc" ref="audio" :autoplay="isPlay" @ended="hasEnd" id="myAudio"></audio>
     </div>
 </template>
 <script>
@@ -33,9 +33,14 @@ export default {
         qFooter
     },
     created() {
-        this.$store.commit('getDom', this.$refs.audio);
+       // this.$store.state.dom=document.getElementById('myAudio');
+      
         this.$store.commit('changeFullScreen',false);
 
+    },
+    mounted(){
+        //一开始放在created方法里面，但是此时模板还未挂载，所以未获取的dom元素；但是奇怪的是之前都可以，暂定原因为vuejs版本升级所致，更严谨了；
+        this.$store.commit('getDom', this.$refs.audio);
     },
     computed: {
         fullScreen(){
