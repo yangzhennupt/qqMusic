@@ -55,6 +55,7 @@ export default {
             this.swiperSlides = res.data.data.focus;
             this.hotdiss = res.data.data.hotdiss.list;
             this.loading = false;
+            
         })
     },
     mounted() {
