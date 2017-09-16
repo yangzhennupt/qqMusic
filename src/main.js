@@ -73,10 +73,11 @@ const store = new Vuex.Store({
                     singerList.push(v.name);
                 })
                 state.audio.singer=singerList.join('/');
-                state.audio.name=state.musicList[index].data.songname;
+                state.audio.name=state.musicList[index].data.songname||state.musicList[index].data.name;
             } else {
                 state.audio.src = "http://ws.stream.qqmusic.qq.com/" + state.musicList[index].id + ".m4a?fromtag=46";
-                state.audio.imgurl = "https://y.gtimg.cn/music/photo_new/T002R500x500M000" + ".jpg";
+
+                
                 state.audio.singer=state.musicList[index].singer;
                 state.audio.name=state.musicList[index].name;
             }
