@@ -6,7 +6,7 @@
         </div>
         <ul class="hotList-detail">
             <li v-for="(item,index) in hotList" :key="item.songid" @click="playSong(item)" class="clearfix">
-                <span class="list-no">{{++index}}</span>{{item.data.name}}
+                <span class="list-no">{{++index}}</span>{{item.data.name}} - <span v-for="singer in item.data.singer ">{{singer.name}}</span>
             </li>
         </ul>
     </div>
@@ -33,7 +33,7 @@ export default {
             this.cdInfo = res.data.cdlist[0];
             let temList = res.data.cdlist[0].songlist;
             for (let i = 0; i < temList.length; i++) {
-                if (i == 10) return;
+                if (i == 20) return;
                 let temObj = {
                     data: {
                         songid: null,
@@ -100,9 +100,10 @@ export default {
 
 .img-filter {
     position: relative;
+    height: 100%;
     img {
         width: 100%;
-        height: 300px;
+        height: 30%;
         float: left;
         border: none;
     }
@@ -114,7 +115,7 @@ export default {
 .hotList-detail {
     list-style: none;
     position: absolute;
-    top: 300px;
+    top: 30%;
     bottom: 0;
     left: 0;
     right: 0;
@@ -129,7 +130,7 @@ export default {
         padding-left: 40px;
         text-align: left;
         &:nth-child(even) {
-            background: #fcfcfc;
+            background: #f5f5f5;
         }
         .list-no {
             float: left;
@@ -141,7 +142,7 @@ export default {
 .playAll {
     position: absolute;
     right: 15px;
-    top: 245px;
+    top: 20%;
     background: url(../assets/playAll.svg) no-repeat;
     background-size: contain;
     height: 50px;
