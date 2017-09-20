@@ -10,6 +10,7 @@
                 </div>
             </div>
             <div class="music-option">
+                <i class="nextSong" @click="nextSong()"></i>
                 <i :class="[isPlay?playIcon:pauseIcon]" @click="play()"></i>
             </div>
         </div>
@@ -50,6 +51,18 @@ export default {
         },
         changeSrc(){
             this.$store.state.audio.imgurl=this.defaultImg;
+        },
+        nextSong(){
+            if (this.$store.state.musicList.length > this.$store.state.audio.index+1) {
+                this.$store.commit('changeMusic', ++this.$store.state.audio.index);
+                //改变播放状态
+                this.$store.commit('play', true);
+                //播放
+                this.$store.state.dom.play();
+            } else {
+                this.$store.commit('play', false);
+                this.isPlay ? this.getDom.play() : this.getDom.pause();
+            }
         }
     }
 }
@@ -62,13 +75,21 @@ export default {
     flex-shrink: 0;
     z-index: 10;
 }
-
+.nextSong{
+    display: inline-block;
+    vertical-align:middle;
+    height: 30px;
+    width: 30px;
+    background: url(../assets/nextSong.svg) no-repeat;
+    background-size: contain;
+}
 .playStyle {
     background: url(../assets/media-pause.svg) no-repeat;
     width: 30px;
     height: 30px;
     display: inline-block;
     background-size: contain;
+        margin-left: 25px;
 }
 
 .pauseStyle {
@@ -77,6 +98,7 @@ export default {
     height: 30px;
     display: inline-block;
     background-size: contain;
+        margin-left: 25px;
 }
 .hasAnimate{
    animation: rounds 10s linear 0s infinite normal;
@@ -106,7 +128,7 @@ export default {
         }
     }
     .music-info {
-        flex: 5;
+        flex: 4;
         display: flex;
         p{
             height: 20px;
@@ -116,7 +138,7 @@ export default {
         }
     }
     .music-option {
-        flex: 1;
+        flex: 1.5;
         display: flex;
     }
 }
