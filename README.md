@@ -1,8 +1,18 @@
 ## qqMusic ##
 
+项目生成：vue-cli;
+
 技术栈：vue+vue-router+vuex+es6+webpack；
 
 接口：通过jsonp请求的QQ音乐的API（考虑到用express进行转发，待实施）；
+
+## 运行 ##
+1. 克隆本项目；
+
+2. 在项目文件内运行命令  npm install (node-sass貌似被墙了，建议用cnpm);
+
+3. 安装完毕后，npm run dev 即可运行；
+
 ## 进度 ##
 
 首页：轮播图不可点击，热门歌单可点击播放,支持添加歌单到播放列表；
