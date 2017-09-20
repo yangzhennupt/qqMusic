@@ -92,7 +92,7 @@ export default {
 .hotList {
     position: absolute;
     top: 0;
-    bottom: 60px;
+    bottom: 0;
     left: 0;
     right: 0;
     background: #fff;
