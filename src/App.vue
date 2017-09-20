@@ -88,6 +88,7 @@ export default {
   
     flex: 20;
     overflow: auto;
+    position: relative;
 }
 
 #app {
