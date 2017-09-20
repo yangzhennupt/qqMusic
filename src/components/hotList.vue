@@ -6,7 +6,7 @@
         </div>
         <ul class="hotList-detail">
             <li v-for="(item,index) in hotList" :key="item.songid" @click="playSong(item)" class="clearfix">
-                <span class="list-no">{{++index}}</span>{{item.data.name}} - <span v-for="singer in item.data.singer ">{{singer.name}}</span>
+                <span class="list-no">{{++index}}</span> <span class="song-name">{{item.data.name}}</span> - <span class="singer"><span v-for="singer in item.data.singer ">{{singer.name}}</span></span>
             </li>
         </ul>
     </div>
@@ -96,14 +96,16 @@ export default {
     left: 0;
     right: 0;
     background: #fff;
+        overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .img-filter {
     position: relative;
-    height: 100%;
+    height: 30%;
     img {
         width: 100%;
-        height: 30%;
+        height: 100%;
         float: left;
         border: none;
     }
@@ -119,8 +121,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+  
     padding: 0;
     margin: 0;
     li {
@@ -129,6 +130,7 @@ export default {
         line-height: 45px;
         padding-left: 40px;
         text-align: left;
+        white-space: nowrap;
         &:nth-child(even) {
             background: #f5f5f5;
         }
@@ -142,7 +144,7 @@ export default {
 .playAll {
     position: absolute;
     right: 15px;
-    top: 20%;
+    top: 70%;
     background: url(../assets/playAll.svg) no-repeat;
     background-size: contain;
     height: 50px;
@@ -151,5 +153,21 @@ export default {
     text-decoration: none;
     outline: none;
     cursor: pointer;
+}
+.song-name{
+    max-width: 60%;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.singer{
+    max-width: 28%;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>

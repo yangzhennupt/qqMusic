@@ -60,6 +60,7 @@ export default {
     width: 100%;
     background-color: #31c27c;
     flex-shrink: 0;
+    z-index: 10;
 }
 
 .playStyle {
