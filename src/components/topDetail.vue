@@ -9,7 +9,7 @@
                 <div class="top-info" :style="{background:mask}">
                     <h6>{{topName}}</h6>
                     <p class="updateTime">{{date}} 更新</p>
-                    <button @click.once="playAll()" class="playAll"></button>
+                    <button @click="playAll()" class="playAll"></button>
                 </div>
             </div>
         </div>

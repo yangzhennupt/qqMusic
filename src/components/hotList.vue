@@ -2,7 +2,7 @@
     <div class="hotList">
         <div class="img-filter">
             <img :src="cdInfo.logo">
-            <i class="playAll" @click.once="playAll()"></i>
+            <i class="playAll" @click="playAll()"></i>
         </div>
         <ul class="hotList-detail">
             <li v-for="(item,index) in hotList" :key="item.songid" @click="playSong(item)" class="clearfix">

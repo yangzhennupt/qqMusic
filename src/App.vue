@@ -6,9 +6,9 @@
         <qNav v-show="!fullScreen"></qNav>
         <!-- 路由控制区域 -->
         <div class="mainContent">
-           
+           <transition name="fade" mode="out-in">
             <router-view></router-view>
-            
+           </transition>
         </div>
         <!-- 底部mini播放器 -->
         <qFooter v-show="!fullScreen"></qFooter>
@@ -99,6 +99,13 @@ export default {
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 15px #6d6969;
+}
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active for below version 2.1.8 */ {
+  opacity: 0;
 }
 
 body {

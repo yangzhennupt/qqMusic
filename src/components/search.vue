@@ -168,7 +168,7 @@ export default {
                 });
                 //获取当前的index;
                 let curIndex = this.$store.state.audio.index;
-                //在当前index位置插入一个数组元素;
+                //在当前index位置插入一个数组元素;;
                 this.$store.state.musicList.splice(++curIndex, 0, item);
 
                 this.$store.commit('changeMusic', curIndex);

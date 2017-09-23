@@ -6,7 +6,7 @@
             </div>
             <div class="music-info">
                 <div class="audio-info">
-                    <p>{{songInfo.name}}{{songInfo.name?'-':''}}{{songInfo.singer}}</p>
+                    <p :class="{roll:isPlay}">{{songInfo.name}}{{songInfo.name?'-':''}}{{songInfo.singer}}</p>
                 </div>
             </div>
             <div class="music-option">
@@ -111,6 +111,24 @@ export default {
         transform:rotate(360deg);
     }
 }
+@keyframes fly {
+    from{
+        transform:translateX(100%);
+    }to{
+         transform:translateX(-100%); 
+    }
+}
+.audio-info{
+    width: 100%;
+    overflow: hidden;
+    margin: 0 20px;
+
+}
+ .roll{
+        float: left;
+        //width: 100%;
+        animation: fly 10s linear 0s infinite normal;
+    }
 .miniPlay {
     display: flex;
     justify-content: space-between;
