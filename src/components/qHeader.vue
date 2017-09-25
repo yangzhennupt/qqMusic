@@ -9,7 +9,7 @@ export default {
     name: 'qHeader',
     data() {
         return {
-            msg: 'dddddd3123122223123123'
+           
         }
     },
     props:['message'],
