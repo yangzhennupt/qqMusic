@@ -251,7 +251,7 @@ export default {
                             color: #fff;
                         }
                         &.singer {
-                            color: #bbb;
+                            color: #fff;
                             border-bottom: 1px solid rgba(158, 158, 158, 0.5);
                             padding-bottom: 5px;
                         }
