@@ -1,5 +1,7 @@
 ## qqMusic ##
 
+线上地址：[http://xkyang.cn/qqmusic](http://xkyang.cn/qqmusic "高仿QQ音乐")
+
 项目生成：vue-cli;
 
 技术栈：vue+vue-router+vuex+es6+webpack；
