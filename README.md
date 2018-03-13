@@ -1,3 +1,5 @@
+# 目前音乐播放接口失效，无法正常播放音乐 #
+
 ## qqMusic ##
 
 线上地址：[http://xkyang.cn/qqmusic](http://xkyang.cn/qqmusic "高仿QQ音乐")
