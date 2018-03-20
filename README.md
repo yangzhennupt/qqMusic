@@ -2,7 +2,7 @@
 
 ## qqMusic ##
 
-线上地址：[http://xkyang.cn/qqmusic](http://xkyang.cn/qqmusic "高仿QQ音乐")
+线上地址：[http://xkyang.cn:8081/qqmusic/](http://xkyang.cn:8081/qqmusic/ "高仿QQ音乐")
 
 项目生成：vue-cli;
 
